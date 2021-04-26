@@ -10,81 +10,101 @@
         :after-visible-change="afterVisibleChange"
         @close="onClose"
       >
-        <a-menu theme="light" mode="inline" :default-selected-keys="['4']">
-          <a-menu-item key="1" @click="link('products')">
-            <a-icon type="user" />
-            <span class="nav-text">Productos</span>
-          </a-menu-item>
-          <a-menu-item key="2" @click="link('')">
-            <a-icon type="video-camera" />
-            <span class="nav-text">Inicio</span>
-          </a-menu-item>
-          <a-sub-menu key="sub2">
-            <span slot="title"
-              ><a-icon type="appstore" /><span>Navigation Two</span></span
-            >
-            <a-menu-item key="9"> Option 9 </a-menu-item>
-            <a-menu-item key="10"> Option 10 </a-menu-item>
-            <a-sub-menu key="sub3" title="Submenu">
-              <a-menu-item key="11"> Option 11 </a-menu-item>
-              <a-menu-item key="12"> Option 12 </a-menu-item>
-            </a-sub-menu>
-          </a-sub-menu>
-        </a-menu>
+        <menuf />
       </a-drawer>
     </div>
     <a-layout id="components-layout-demo-responsive">
       <a-layout>
         <!-- <a-layout-header :style="{ background: 'linear-gradient(-90deg, #086FBB 8%, #00c9db 92%)', padding: 0 }"> -->
-        <div v-if="valorResponsive">
+        <div v-if="this.$store.state.responsive">
           <a-menu
             v-model="current"
             mode="horizontal"
             class="navBar"
             :style="{
-              background: 'linear-gradient(-90deg, #086FBB 8%, #00c9db 92%) ',
+              background: 'linear-gradient(-90deg, #086FBB 8%, #232323 92%) ',
               padding: 0,
             }"
           >
             <a-menu-item key="" @click="showDrawer">
               <a-icon type="unordered-list" />
             </a-menu-item>
+            <a-menu-item key="mail" @click="link('')">
+              <a-icon type="home" />Inicio
+            </a-menu-item>
+            <a-menu-item
+              key="mail"
+              @click="redirect('https://www.facebook.com/freestyle2911')"
+            >
+              <a-icon type="facebook" />Facebook
+            </a-menu-item>
+            <a-menu-item
+              key="instagram"
+              @click="redirect('https://www.facebook.com/freestyle2911')"
+            >
+              <a-icon type="instagram" />Instagram
+            </a-menu-item>
+            <a-menu-item key="login" @click="link('login')">
+              <a-icon type="user" />Ingresar
+            </a-menu-item>
+            <a-menu-item key="logout" @click="link('logout')">
+              <a-icon type="logout" />Salir
+            </a-menu-item>
           </a-menu>
         </div>
-        <div v-else>
+        <div v-else align="right">
           <a-menu
             v-model="current"
             mode="horizontal"
             class="navBar"
             :style="{
-              background: 'linear-gradient(-90deg, #086FBB 8%, #00c9db 92%) ',
+              background: 'linear-gradient(-90deg, #086FBB 8%, #232323 92%) ',
               padding: 0,
             }"
           >
-            <a-menu-item key="mail" @click="link('products')">
-              <a-icon type="mail" />Productos
+            <a-menu-item key="mail" @click="link('')">
+              <a-icon type="home" />Inicio
             </a-menu-item>
-            <a-menu-item key="app" @click="link('')">
-              <a-icon type="appstore" />Navigation Two
+            <a-menu-item
+              key="mail"
+              @click="redirect('https://www.facebook.com/freestyle2911')"
+            >
+              <a-icon type="facebook" />Facebook
             </a-menu-item>
-            <a-sub-menu>
+            <a-menu-item
+              key="instagram"
+              @click="redirect('https://www.facebook.com/freestyle2911')"
+            >
+              <a-icon type="instagram" />Instagram
+            </a-menu-item>
+             <a-menu-item key="login" @click="link('login')">
+              <a-icon type="user-add" />Registrarse
+            </a-menu-item>
+            <a-menu-item key="login" @click="link('login')">
+              <a-icon type="login" />Ingresar
+            </a-menu-item>
+            <a-menu-item key="logout" @click="link('logout')">
+              <a-icon type="logout" />Salir
+            </a-menu-item>
+            <!-- <a-sub-menu>
               <span slot="title" class="submenu-title-wrapper"
                 ><a-icon type="setting" />Navigation Three - Submenu</span
               >
-              <!-- <a-menu-item-group title="Item 1" > -->
+               <a-menu-item-group title="Item 1" > 
               <a-menu-item key="setting:1"> Option 1 </a-menu-item>
               <a-menu-item key="setting:2"> Option 2 </a-menu-item>
-              <!-- </a-menu-item-group> -->
-              <!-- <a-menu-item-group title="Item 2" > -->
+               </a-menu-item-group> 
+               <a-menu-item-group title="Item 2" > 
               <a-menu-item key="setting:3"> Option 3 </a-menu-item>
               <a-menu-item key="setting:4"> Option 4 </a-menu-item>
-              <!-- </a-menu-item-group> -->
-            </a-sub-menu>
+               </a-menu-item-group> 
+            </a-sub-menu> -->
           </a-menu>
         </div>
+        <headerf />
 
         <!-- </a-layout-header> -->
-        <a-layout-content :style="{ margin: '24px 16px 0' }">
+        <a-layout-content :style="{ margin: '10px 16px 0' }">
           <!-- <div
           :style="{ padding: '24px', background: '#fff', minHeight: '360px' }"
         > -->
@@ -100,11 +120,14 @@
   </div>
 </template>
 <script>
+import headerf from "./views/Header.vue";
+import menuf from "./views/Menu";
+
 export default {
+  components: { headerf, menuf },
   data() {
     return {
       current: ["mail"],
-      valorResponsive: false,
       visible: false,
     };
   },
@@ -122,6 +145,9 @@ export default {
     link(route) {
       this.$router.push("/" + route);
     },
+    redirect(link) {
+      window.open(link);
+    },
     showDrawer() {
       let me = this;
       me.visible = true;
@@ -137,17 +163,17 @@ export default {
 
       if (window.matchMedia("(max-width: 500px)").matches) {
         // La media querie coincide
-        me.valorResponsive = true;
+        me.$store.commit("setResponsive", true);
       } else {
-        me.valorResponsive = false;
+        me.$store.commit("setResponsive", false);
       }
 
       mql.addListener(function (event) {
         if (event.matches) {
           // La media querie coincide
-          me.valorResponsive = true;
+          me.$store.commit("setResponsive", true);
         } else {
-          me.valorResponsive = false;
+          me.$store.commit("setResponsive", false);
         }
       });
     },
@@ -181,7 +207,7 @@ export default {
 }
 .navBar .ant-menu-item:hover,
 .navBar .ant-menu-submenu-title:hover {
-  color: #000 !important;
+  color: #fff !important;
   /* border-bottom: 1px solid #fff !important; */
 }
 </style>

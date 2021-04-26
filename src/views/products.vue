@@ -1,36 +1,73 @@
 <template>
   <div style="justify-content: center">
+     <h1 style="font-size:25px"><b> {{ category.name }} </b></h1>
     <a-row>
-      <!-- <a-col :xs="23" :sm="11" :md="11" :lg="6" :xl="6">
+      <a-col
+        :xs="13"
+        :sm="13"
+        :md="13"
+        :lg="4"
+        :xl="4"
+        style="margin-top: 30px"
+      >
         <a-select
-          show-search
-          placeholder="Seleccione una categoría"
-          option-filter-prop="children"
+          placeholder="Ordenar por "
           style="width: 100%"
-          :filter-option="filterOption"
-          @focus="handleFocus"
-          @blur="handleBlur"
-          @change="handleChange"
-          :dropdownMenuStyle="{
-            background: 'linear-gradient(-90deg, #086FBB 8%, #00c9db 92%) ',
-          }"
+          v-model="order_name"
+          @change="byCategory"
         >
-          <a-select-option value="jack"> Jack </a-select-option>
-          <a-select-option value="lucy"> Lucy </a-select-option>
-          <a-select-option value="tom"> Tom </a-select-option>
+          <a-select-option value="price"> Precio </a-select-option>
+          <a-select-option value="name"> Nombre (A-Z) </a-select-option>
+          <!-- <a-select-option value="date"> Fecha de llegada </a-select-option> -->
         </a-select>
-      </a-col> -->
-      <a-col :xs="23" :sm="11" :md="11" :lg="24" :xl="24">
+      </a-col>
+      <a-col
+        :xs="3"
+        :sm="3"
+        :md="3"
+        :lg="2"
+        :xl="2"
+        v-show="order == 'ASC'"
+        style="margin-top: 30px"
+      >
+        <a-button shape="circle" icon="up" @click="changeOrder" />
+      </a-col>
+      <a-col
+        :xs="3"
+        :sm="3"
+        :md="3"
+        :lg="2"
+        :xl="2"
+        v-show="order == 'DESC'"
+        style="margin-top: 30px"
+      >
+        <a-button shape="circle" icon="down" @click="changeOrder" />
+      </a-col>
+      <a-col :xs="13" :sm="13" :md="13" :lg="2" :xl="2">
+        <span></span>
+      </a-col>
+      <a-col
+        :xs="24"
+        :sm="24"
+        :md="24"
+        :lg="16"
+        :xl="16"
+        style="margin-top: 30px"
+      >
         <input
-          placeholder="Buscar producto"
-          enter-button
-          @search="onSearch"
+          placeholder="Buscar aquí"
+          style="width: 100%"
           class="ant-input"
+          v-model="search"
+          @keyup="byCategory"
         />
       </a-col>
     </a-row>
-    <br>
+    <br />
+
+  
     <a-row>
+      <br />
       <a-col
         :xs="23"
         :sm="11"
@@ -38,163 +75,85 @@
         :lg="6"
         :xl="6"
         style="margin-bottom: 5px"
+        v-for="product in arrayProducts"
+        :key="product.idProduct"
       >
-        <a-card hoverable style="width: 95%">
-          <img
-            slot="cover"
-            alt="example"
-            src="http://sc04.alicdn.com/kf/HTB1tER7lKuSBuNjy1Xcq6AYjFXaJ.jpg"
-          />
-          <template slot="actions" class="ant-card-actions">
-            <a-icon key="setting" type="setting" />
-            <a-icon key="edit" type="edit" />
-            <a-icon key="ellipsis" type="ellipsis" />
-          </template>
-          <a-card-meta
-            title="Reloj Hombre"
-            description="This is the description"
-          >
-            <a-avatar
-              slot="avatar"
-              src="https://image.made-in-china.com/202f0j10qEeRSaMIhmou/E-7323-CS-Alibaba-Express-Fashion-Cheap-Jewellery-Wedding-Bridal-Jewelry-Sets.jpg"
-            />
-          </a-card-meta>
-        </a-card>
-      </a-col>
-      <a-col
-        :xs="23"
-        :sm="11"
-        :md="11"
-        :lg="6"
-        :xl="6"
-        style="margin-bottom: 5px"
-      >
-        <a-card hoverable style="width: 95%">
-          <img
-            slot="cover"
-            alt="example"
-            src="https://sc04.alicdn.com/kf/HTB1nO0xHVXXXXcPXXXXq6xXFXXXj.jpg"
-          />
-          <template slot="actions" class="ant-card-actions">
-            <a-icon key="setting" type="setting" />
-            <a-icon key="edit" type="edit" />
-            <a-icon key="ellipsis" type="ellipsis" />
-          </template>
-          <a-card-meta
-            title="Reloj Hombre"
-            description="This is the description"
-          >
-            <a-avatar
-              slot="avatar"
-              src="https://sc04.alicdn.com/kf/HTB1nO0xHVXXXXcPXXXXq6xXFXXXj.jpg"
-            />
-          </a-card-meta>
-        </a-card>
-      </a-col>
-      <a-col
-        :xs="23"
-        :sm="11"
-        :md="11"
-        :lg="6"
-        :xl="6"
-        style="margin-bottom: 5px"
-      >
-        <a-card hoverable style="width: 95%">
-          <img
-            slot="cover"
-            alt="example"
-            src="https://sc01.alicdn.com/kf/H8ff796b359854e8bbb4d947cb84b538ct.jpg"
-          />
-          <template slot="actions" class="ant-card-actions">
-            <a-icon key="setting" type="setting" />
-            <a-icon key="edit" type="edit" />
-            <a-icon key="ellipsis" type="ellipsis" />
-          </template>
-          <a-card-meta
-            title="Reloj Hombre"
-            description="This is the description"
-          >
-            <a-avatar
-              slot="avatar"
-              src="https://sc01.alicdn.com/kf/H8ff796b359854e8bbb4d947cb84b538ct.jpg"
-            />
-          </a-card-meta>
-        </a-card>
-      </a-col>
-      <a-col
-        :xs="23"
-        :sm="11"
-        :md="11"
-        :lg="6"
-        :xl="6"
-        style="margin-bottom: 5px"
-      >
-        <a-card hoverable style="width: 95%">
-          <img
-            slot="cover"
-            alt="example"
-            src="https://sc01.alicdn.com/kf/H8ff796b359854e8bbb4d947cb84b538ct.jpg"
-          />
-          <template slot="actions" class="ant-card-actions">
-            <a-icon key="setting" type="setting" />
-            <a-icon key="edit" type="edit" />
-            <a-icon key="ellipsis" type="ellipsis" />
-          </template>
-          <a-card-meta
-            title="Reloj Hombre"
-            description="This is the description"
-          >
-            <a-avatar
-              slot="avatar"
-              src="https://sc01.alicdn.com/kf/H8ff796b359854e8bbb4d947cb84b538ct.jpg"
-            />
-          </a-card-meta>
-        </a-card>
-      </a-col>
-      <a-col
-        :xs="23"
-        :sm="11"
-        :md="11"
-        :lg="6"
-        :xl="6"
-        style="margin-bottom: 5px"
-      >
-        <a-card hoverable style="width: 95%">
-          <img
-            slot="cover"
-            alt="example"
-            src="http://sc04.alicdn.com/kf/HTB1tER7lKuSBuNjy1Xcq6AYjFXaJ.jpg"
-          />
-          <template slot="actions" class="ant-card-actions">
-            <a-icon key="setting" type="setting" />
-            <a-icon key="edit" type="edit" />
-            <a-icon key="ellipsis" type="ellipsis" />
-          </template>
-          <a-card-meta
-            title="Reloj Hombre"
-            description="This is the description"
-          >
-            <a-avatar
-              slot="avatar"
-              src="https://image.made-in-china.com/202f0j10qEeRSaMIhmou/E-7323-CS-Alibaba-Express-Fashion-Cheap-Jewellery-Wedding-Bridal-Jewelry-Sets.jpg"
-            />
-          </a-card-meta>
-        </a-card>
+        <Product :product="product" @detailProduct="detail" />
       </a-col>
     </a-row>
   </div>
 </template>
 <script>
+import Product from "../components/Product.vue";
+import axios from "../Config/axios";
 export default {
+  components: { Product },
+
   data() {
     return {
       collapsed: false,
+      order: "ASC",
+      order_name: "name",
+      arrayProducts: [],
+      search: "",
+      category: [],
     };
+  },
+  mounted() {
+    this.getCategory();
+    var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    this.search = urlParams.get("search");
+    this.byCategory();
+  },
+  methods: {
+    byCategory() {
+      let me = this;
+
+      let queryString = window.location.search;
+      let urlParams = new URLSearchParams(queryString);
+      axios
+        .post("/products/byCategory", {
+          order: me.order,
+          order_name: me.order_name,
+          search: me.search,
+          idCategory: urlParams.get("category"),
+        })
+        .then(function (response) {
+          me.arrayProducts = response.data.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getCategory() {
+      let me = this;
+
+      let queryString = window.location.search;
+      let urlParams = new URLSearchParams(queryString);
+
+      axios
+        .get("/categories/" + urlParams.get("category"))
+        .then(function (response) {
+          if (urlParams.get("category") == "all") {
+            me.category = { name: "Todas las categorias" };
+          } else {
+            me.category = response.data.data;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    changeOrder() {
+      this.order == "ASC" ? (this.order = "DESC") : (this.order = "ASC");
+      this.byCategory();
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
 #components-layout-demo-top-side-2 .logo {
   width: 120px;
   height: 31px;
@@ -212,16 +171,16 @@ export default {
 }
 
 .ant-input {
-  background: linear-gradient(-90deg, #086fbb 1%, #00c9db 99%)!important;
+  background: linear-gradient(-90deg, #086fbb 1%, #232323 99%) !important;
   /* background-color: #086fbb!important; */
 
-  color:  #fff !important;
+  color: #fff !important;
 }
-.ant-input::placeholder{
-  color:#fff !important;
+.ant-input::placeholder {
+  color: #fff !important;
 }
 
-#nav {
+/* #nav {
   padding: 30px;
 
   a {
@@ -232,5 +191,5 @@ export default {
       color: #42b983;
     }
   }
-}
+} */
 </style>
