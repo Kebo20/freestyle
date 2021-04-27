@@ -1,6 +1,8 @@
 <template>
   <div style="justify-content: center">
-     <h1 style="font-size:25px"><b> {{ category.name }} </b></h1>
+    <h1 style="font-size: 25px">
+      <b> {{ category.name }} </b>
+    </h1>
     <a-row>
       <a-col
         :xs="13"
@@ -65,7 +67,6 @@
     </a-row>
     <br />
 
-  
     <a-row>
       <br />
       <a-col
@@ -78,9 +79,10 @@
         v-for="product in arrayProducts"
         :key="product.idProduct"
       >
-        <Product :product="product" @detailProduct="detail" />
+        <Product :product="product"  />
       </a-col>
     </a-row>
+
   </div>
 </template>
 <script>
@@ -97,13 +99,19 @@ export default {
       arrayProducts: [],
       search: "",
       category: [],
+    
     };
   },
   mounted() {
-    this.getCategory();
     var queryString = window.location.search;
     var urlParams = new URLSearchParams(queryString);
-    this.search = urlParams.get("search");
+    this.search = urlParams.get("search") ? urlParams.get("search") : "";
+
+    if (urlParams.get("category") == "all") {
+      this.category = { name: "Todas las categorias" };
+    } else {
+      this.getCategory();
+    }
     this.byCategory();
   },
   methods: {
@@ -135,20 +143,17 @@ export default {
       axios
         .get("/categories/" + urlParams.get("category"))
         .then(function (response) {
-          if (urlParams.get("category") == "all") {
-            me.category = { name: "Todas las categorias" };
-          } else {
-            me.category = response.data.data;
-          }
+          me.category = response.data.data;
         })
         .catch(function (error) {
-          console.log(error);
+          
         });
     },
     changeOrder() {
       this.order == "ASC" ? (this.order = "DESC") : (this.order = "ASC");
       this.byCategory();
     },
+   
   },
 };
 </script>
@@ -179,7 +184,9 @@ export default {
 .ant-input::placeholder {
   color: #fff !important;
 }
-
+.ant-modal-content{
+    width: 800px !important;
+}
 /* #nav {
   padding: 30px;
 
