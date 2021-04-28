@@ -1,9 +1,9 @@
 <template>
   <div>
     <a-card hoverable class="card-product">
-      <img slot="cover" alt="example" :src="product.image" />
+      <img slot="cover" alt="example" :src="'http://freestyle-backend'+product.image" />
       <a-card-meta :title="product.name" description="">
-        <a-avatar slot="avatar" :src="product.image" />
+        <a-avatar slot="avatar" :src="'http://freestyle-backend'+product.image" />
       </a-card-meta>
       <div style="margin-top: 15px">
         <a-row>
@@ -44,7 +44,7 @@
     >
       <a-row>
         <a-col :xs="24" :lg="12">
-          <img :src="product.image" width="270px" />
+          <img :src="'http://freestyle-backend'+product.image" width="270px" />
         </a-col>
         <a-col :xs="24" :lg="12">
           <a-row>

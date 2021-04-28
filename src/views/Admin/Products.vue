@@ -1,7 +1,9 @@
 <template>
   <div>
     <a-button-group>
-      <a-button type="primary"> <a-icon type="plus" />Añadir producto</a-button>
+      <a-button type="primary" @click="openModal">
+        <a-icon type="plus" />Añadir producto</a-button
+      >
     </a-button-group>
     <br />
     <br />
@@ -23,7 +25,7 @@
           color="blue"
           style="cursor: pointer"
           @click="active(record.idProduct)"
-          ><a-icon type="eye"
+          ><a-icon type="reload"
         /></a-tag>
         <a-tag color="blue" style="cursor: pointer" @click="edit(record)"
           ><a-icon type="edit"
@@ -42,18 +44,49 @@
     </a-table>
     <a-modal
       v-model="visible"
-      title="Registrar Producto"
-      @ok="handleOk"
+      :title="accion == 1 ? 'Registrar Producto' : 'Actualizar Producto'"
+      @ok="handleSubmit"
     >
-      <a-form
-        id="components-form-demo-normal-login"
-        :form="form"
-        class="login-form"
-        @submit="handleSubmit"
-      >
-        <a-form-item label='Nombre'>
+      <a-form :form="form" @submit="handleSubmit">
+        <a-form-item label="Foto del producto">
+          <a-upload
+            name="file_to_upload"
+            list-type="picture-card"
+            class="avatar-uploader"
+            :show-upload-list="false"
+            action="http://freestyle-backend/api/auth/files/storage"
+            :before-upload="beforeUpload"
+            :headers="headers"
+            @change="handleChangeUpload"
+          >
+            <img
+              v-if="image"
+              width="200px"
+              :src="'http://freestyle-backend' + image"
+              alt="Imagen"
+            />
+            <div v-else>
+              <a-icon :type="loading ? 'loading' : 'plus'" />
+              <div class="ant-upload-text">Subir</div>
+            </div>
+          </a-upload>
+        </a-form-item>
+        <a-form-item label="idProduct" style="display: none">
           <a-input
-            v-model="product.name"
+            v-decorator="[
+              'idProduct',
+              {
+                rules: [
+                  { required: false, message: 'Por favor ingrese un nombre' },
+                ],
+              },
+            ]"
+            placeholder="Nombre"
+          >
+          </a-input>
+        </a-form-item>
+        <a-form-item label="Nombre">
+          <a-input
             v-decorator="[
               'name',
               {
@@ -66,10 +99,9 @@
           >
           </a-input>
         </a-form-item>
-        <a-form-item label='Precio'>
+        <a-form-item label="Precio">
           <a-input-number
-            v-model="product.price"
-            :min='1'
+            :min="1"
             v-decorator="[
               'price',
               {
@@ -81,22 +113,71 @@
                 ],
               },
             ]"
-            placeholder="Precio"
+            placeholder="0.00"
           >
           </a-input-number>
         </a-form-item>
+
+        <a-form-item label="Precio antiguo">
+          <a-input-number
+            :min="1"
+            v-decorator="[
+              'price_old',
+              {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Por favor ingrese un precio',
+                  },
+                ],
+              },
+            ]"
+            placeholder="0.00"
+          >
+          </a-input-number>
+        </a-form-item>
+        <a-form-item label="Categoría">
+          <a-select
+            :min="1"
+            show-search
+            option-filter-prop="children"
+            :filter-option="filterOption"
+            v-decorator="[
+              'idCategory',
+              {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Por favor seleccione una categoría',
+                  },
+                ],
+              },
+            ]"
+            placeholder="0.00"
+          >
+            <a-select-option
+              v-for="category in arrayCategories"
+              :key="category.idCategory"
+              :value="category.idCategory"
+            >
+              {{ category.name }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item>
+          <!-- <a-button key="back" @click="handleCancel"> Cerrar </a-button>
+          <a-button class="btn-primary" type="primary" html-type="submit">
+            <a-icon type="save" /> Guardar
+          </a-button> -->
+        </a-form-item>
       </a-form>
-      <template slot="footer">
+      <!-- <template slot="footer">
         <a-button key="back" @click="handleCancel"> Cerrar </a-button>
-        <a-button
-          class="btn-primary"
-          key="submit"
-          type="primary"
-          @click="handleOk"
-        >
-          <a-icon type="shopping-cart" /> Añadir al carrito
+        <a-button class="btn-primary" type="primary" html-type="submit">
+          <a-icon type="save" /> Guardar
         </a-button>
-      </template>
+        <div></div>
+      </template> -->
     </a-modal>
   </div>
 </template>
@@ -142,9 +223,16 @@ const columns = [
   },
 ];
 
+function getBase64(img, callback) {
+  const reader = new FileReader();
+  reader.addEventListener("load", () => callback(reader.result));
+  reader.readAsDataURL(img);
+}
+
 export default {
   name: "Product",
   components: {},
+
   data() {
     return {
       arrayProducts: [],
@@ -167,6 +255,11 @@ export default {
       pagination: {},
       loading: false,
       columns,
+      image: "",
+      form: this.$form.createForm(this, { name: "normal_login" }),
+      headers: {
+        Authorization: "Bearer " + this.$store.state.token,
+      },
     };
   },
 
@@ -176,18 +269,20 @@ export default {
   },
   computed() {},
   methods: {
-    clean() {
-      let me = this;
-      me.product = {
-        name: "",
-        brand: "",
-        price: "",
-        units: "",
-        id_category: "",
-        category: {},
-      };
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      );
     },
-
+    openModal() {
+      let me = this;
+      me.visible = true;
+      me.form.resetFields();
+      me.image = "";
+      me.accion = 1;
+    },
     handleCancel() {
       let me = this;
 
@@ -198,17 +293,22 @@ export default {
       e.preventDefault();
       let me = this;
 
-      this.form.validateFields((err, values) => {
+      me.form.validateFields((err, values) => {
         if (!err) {
-          alert();
+          values.image = me.image;
+          me.save(values);
         }
       });
     },
 
     edit(product) {
       let me = this;
-      me.product = product;
       me.visible = true;
+      me.accion = 2;
+      me.image = product.image;
+      setTimeout(() => {
+        this.form.setFieldsValue(product);
+      }, 300);
     },
     delet(id) {
       let me = this;
@@ -284,10 +384,10 @@ export default {
     categories() {
       let me = this;
       axios
-        .get("/auth/categories")
+        .get("/auth/categories/list")
         .then(function (response) {
           me.arrayCategories = response.data.data;
-          console.log(response);
+          console.log(response.data.data);
         })
         .catch(function (error) {
           console.log(error);
@@ -311,93 +411,64 @@ export default {
         });
     },
 
-    validate() {
+    save(product) {
       let me = this;
-      let count = 0;
 
-      if (me.product.name == "") {
-        swal("Datos incompletos", "Ingrese un nombre", "warning");
-        count = 1;
-      }
-      if (me.product.price == "") {
-        swal("Datos incompletos", "Ingrese el precio del producto", "warning");
-        count = 1;
-      }
-      if (me.category.id_category == "") {
-        swal("Datos incompletos", "Seleccione una categoría", "warning");
-        count = 1;
-      }
-
-      return count;
-    },
-
-    save() {
-      let me = this;
-      if (this.validate() > 0) {
-        return false;
-      }
       if (me.accion == 1) {
         axios
           .post("/auth/products", {
-            code: me.product.code,
-            name: me.product.name,
-            brand: me.product.brand,
-            price: me.product.price,
-            price_min: me.product.price_min,
-            price2: me.product.price2,
-
-            id_category: me.category.id_category,
-            units: me.product.units,
+            name: product.name,
+            brand: product.brand,
+            price: product.price,
+            price_old: product.price_old,
+            idCategory: product.idCategory,
+            image: product.image,
           })
           .then(function (response) {
             me.products();
             if (response) {
-              swal("Correcto", response.data.message, "success");
+              me.form.resetFields();
+              me.image = "";
+
+              me.$message.success(response.data.message);
+
+              me.visible = false;
             } else {
-              swal("Error ", response.message, "error");
+              me.$message.error(response.data.message);
             }
           })
           .catch(function (error) {
-            console.log(error.response);
-            swal("Error ", error.response.data.message, "error");
+            me.$message.error(error.response.data.message);
           });
-        me.modal = 0;
       } else {
         axios
-          .put("/auth/products/" + me.id, {
-            code: me.product.code,
-            name: me.product.name,
-            brand: me.product.brand,
-            price_min: me.product.price_min,
-            price: me.product.price,
-            price2: me.product.price2,
-
-            id_category: me.category.id_category,
-            units: me.product.units,
+          .put("/auth/products/" + product.idProduct, {
+            name: product.name,
+            brand: product.brand,
+            price: product.price,
+            price_old: product.price_old,
+            idCategory: product.idCategory,
+            image: product.image,
           })
           .then(function (response) {
             me.products();
             if (response) {
-              swal("Correcto", response.data.message, "success");
+              me.form.resetFields();
+              me.image = "";
+
+              me.$message.success(response.data.message);
+              me.visible = false;
             } else {
-              swal("Error ", response.message, "error");
+              me.$message.error(response.data.message);
             }
           })
           .catch(function (error) {
-            console.log(error.response);
-            swal("Error ", error.response.data.message, "error");
+            me.$message.error(error.response.data.message);
           });
-
-        me.modal = 0;
       }
     },
 
-    validator(val) {
-      return val ? val.length > 0 : false;
-    },
-
     handleTableChange(pagination, filters, sorter) {
-      console.log(pagination);
       const pager = { ...this.pagination };
       pager.current = pagination.current;
       this.pagination = pager;
@@ -409,9 +480,58 @@ export default {
         ...filters,
       });
     },
+
+    handleChangeUpload(info) {
+      let me = this;
+
+      if (info.file.status === "uploading") {
+        me.loading = true;
+        return;
+      }
+      if (info.file.status === "done") {
+        me.image = info.file.response.url;
+
+        // Get this url from response in real world.
+        // getBase64(info.file.originFileObj, (imageUrl) => {
+        //  me.imageUrl = imageUrl;
+        //
+        //
+
+        // });
+        me.loading = false;
+        me.$message.success(
+          "La imagen " + info.file.response.name + " se cargo correctamente"
+        );
+      }
+    },
+    beforeUpload(file) {
+      const isJpgOrPng =
+        file.type === "image/jpeg" || file.type === "image/png";
+      if (!isJpgOrPng) {
+        this.$message.error("You can only upload JPG file!");
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error("Image must smaller than 2MB!");
+      }
+      return isJpgOrPng && isLt2M;
+    },
   },
 };
 </script>
 
 <style scoped>
+.avatar-uploader > .ant-upload {
+  width: 128px;
+  height: 128px;
+}
+.ant-upload-select-picture-card i {
+  font-size: 32px;
+  color: #999;
+}
+
+.ant-upload-select-picture-card .ant-upload-text {
+  margin-top: 8px;
+  color: #666;
+}
 </style>

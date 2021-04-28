@@ -80,6 +80,7 @@ import axios from "../Config/axios";
 export default {
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: "normal_login" });
+    
   },
   data() {
     return {
