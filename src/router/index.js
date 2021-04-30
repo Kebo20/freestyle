@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import store from '../store/index'
 
 Vue.use(VueRouter)
 
@@ -21,19 +22,49 @@ const routes = [
   {
     path: '/products',
     name: 'products',
-    component: () => import( '../views/products.vue')
+    component: () => import('../views/products.vue')
   },
+
 
   {
     path: '/admin/products',
     name: 'AdminProducts',
-    component: () => import( '../views/Admin/Products.vue')
+    component: () => import('../views/Admin/Products.vue'),
+    beforeEnter: (to, from, next) => {
+      let token = store.state.token
+      if (token != '') {
+        next()
+      } else {
+        next("/login")
+      }
+
+    }
+  },
+
+  {
+    path: '/admin/categories',
+    name: 'AdminCategories',
+    component: () => import('../views/Admin/Categories.vue'),
+    beforeEnter: (to, from, next) => {
+      let token = store.state.token
+      if (token != '') {
+        next()
+      } else {
+        next("/login")
+      }
+
+    }
   },
 
   {
     path: '/login',
     name: 'login',
-    component: () => import( '../views/Login.vue')
+    component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import('../views/Logout.vue')
   },
 ]
 
@@ -42,5 +73,50 @@ const router = new VueRouter({
   linkActiveClass: 'active',
   routes
 })
+
+
+//VALIDAR SESIÓN EN RUTAS
+// router.beforeEach((to, from, next) => {
+// let token = store.state.token
+
+
+// if (token != '') { //Existe token
+
+
+//   if (to.path == '/login') {
+//     next('/admin')
+//   }
+
+//   if (to.path == '/admin/products') {
+//     next('')
+//   }
+
+
+
+// } else {
+//   if (to.path == '/login') {
+//     next()
+//   }
+
+//   if (to.path == '/admin/products') {
+//     next('/login')
+//   }
+
+
+
+//   if (to.path == '/login') {
+//     next()
+//   }
+
+//   if (to.path == '/admin/products') {
+//     next('/login')
+//   }
+
+
+// }
+
+
+// })
+
 
 export default router

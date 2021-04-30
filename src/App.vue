@@ -29,8 +29,15 @@
             <a-menu-item key="" @click="showDrawer">
               <a-icon type="unordered-list" />
             </a-menu-item>
+            <a-menu-item
+              v-if="this.$store.state.rol != ''"
+              key="mail"
+              @click="link('admin/products')"
+            >
+              <a-icon type="safety-certificate" />ADMIN
+            </a-menu-item>
             <a-menu-item key="mail" @click="link('')">
-              <a-icon type="home" />Inicio
+              <a-icon type="shop" />Inicio
             </a-menu-item>
             <a-menu-item
               key="mail"
@@ -44,10 +51,18 @@
             >
               <a-icon type="instagram" />Instagram
             </a-menu-item>
-            <a-menu-item key="login" @click="link('login')">
-              <a-icon type="user" />Ingresar
+            <a-menu-item
+              v-if="this.$store.state.rol == ''"
+              key="login"
+              @click="link('login')"
+            >
+              <a-icon type="login" />Ingresar
             </a-menu-item>
-            <a-menu-item key="logout" @click="link('logout')">
+            <a-menu-item
+              v-if="this.$store.state.rol != ''"
+              key="logout"
+              @click="logout"
+            >
               <a-icon type="logout" />Salir
             </a-menu-item>
           </a-menu>
@@ -62,8 +77,15 @@
               padding: 0,
             }"
           >
+            <a-menu-item
+              v-if="this.$store.state.rol != ''"
+              key="mail"
+              @click="link('admin/products')"
+            >
+              <a-icon type="safety-certificate" />ADMIN
+            </a-menu-item>
             <a-menu-item key="mail" @click="link('')">
-              <a-icon type="home" />Inicio
+              <a-icon type="shop" />Inicio
             </a-menu-item>
             <a-menu-item
               key="mail"
@@ -77,13 +99,22 @@
             >
               <a-icon type="instagram" />Instagram
             </a-menu-item>
-             <a-menu-item key="login" @click="link('login')">
+            <!-- <a-menu-item key="login" @click="link('login')">
               <a-icon type="user-add" />Registrarse
-            </a-menu-item>
-            <a-menu-item key="login" @click="link('login')">
+            </a-menu-item> -->
+
+            <a-menu-item
+              v-if="this.$store.state.rol == ''"
+              key="login"
+              @click="link('login')"
+            >
               <a-icon type="login" />Ingresar
             </a-menu-item>
-            <a-menu-item key="logout" @click="link('logout')">
+            <a-menu-item
+              v-if="this.$store.state.rol != ''"
+              key="logout"
+              @click="logout"
+            >
               <a-icon type="logout" />Salir
             </a-menu-item>
             <!-- <a-sub-menu>
@@ -122,6 +153,7 @@
 <script>
 import headerf from "./views/Header.vue";
 import menuf from "./views/Menu";
+import axios from "./Config/axios";
 
 export default {
   components: { headerf, menuf },
@@ -155,6 +187,28 @@ export default {
     onClose() {
       let me = this;
       me.visible = false;
+    },
+
+    logout() {
+      let me = this;
+
+      axios
+        .get("/auth/logout")
+        .then(function (response) {
+          console.log(response);
+          me.$store.commit("user", "");
+          me.$store.commit("rol", "");
+          me.$store.commit("token", "");
+
+          me.$router.push("/");
+        })
+        .catch(function (error) {
+          console.log(error);
+          me.$store.commit("user", "");
+          me.$store.commit("rol", "");
+          me.$store.commit("token", "");
+          me.$router.push("/");
+        });
     },
 
     responsive() {

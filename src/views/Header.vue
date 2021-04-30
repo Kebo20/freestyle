@@ -12,6 +12,7 @@
         :lg="4"
         :xl="4"
         style="margin-top: 20px"
+        v-show="this.$route.name.search('Admin')>-1?false:true"
       >
         <a-select
           show-search
@@ -37,6 +38,7 @@
         :lg="10"
         :xl="10"
         style="margin-top: 20px"
+        v-show="this.$route.name.search('Admin')>-1?false:true"
       >
         <a-input-search
           placeholder="Buscar en la Tienda"
@@ -52,6 +54,8 @@
         :lg="2"
         :xl="2"
         style="margin-top: 20px"
+        v-show="this.$route.name.search('Admin')>-1?false:true"
+
       >
         <a-button style="color: #086fbb">
           <a-icon type="shopping-cart" /> | Carrito</a-button
