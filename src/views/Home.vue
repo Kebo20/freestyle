@@ -49,7 +49,7 @@
             border-radius: 5px;
             margin-bottom: 10px;
           "
-          >NOVEDADES</span
+          >Novedades-</span
         >
         <a-row>
           <br />
