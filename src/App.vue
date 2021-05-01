@@ -32,7 +32,7 @@
             <a-menu-item
               v-if="this.$store.state.rol != ''"
               key="mail"
-              @click="link('admin/products')"
+              @click="link('admin')"
             >
               <a-icon type="safety-certificate" />ADMIN
             </a-menu-item>
@@ -80,7 +80,7 @@
             <a-menu-item
               v-if="this.$store.state.rol != ''"
               key="mail"
-              @click="link('admin/products')"
+              @click="link('admin')"
             >
               <a-icon type="safety-certificate" />ADMIN
             </a-menu-item>

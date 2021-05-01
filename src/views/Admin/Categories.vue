@@ -2,7 +2,7 @@
   <div>
     <a-button-group>
       <a-button type="primary" @click="openModal">
-        <a-icon type="plus" />Añadir producto</a-button
+        <a-icon type="plus" />Añadir categoría</a-button
       >
     </a-button-group>
     <br />
@@ -16,21 +16,17 @@
       @change="onChangePage"
       :scroll="{ x: 700 }"
     >
-      <span slot="novelty" slot-scope="text, record">
-        <a-checkbox :checked="record.novelty == 1 ? true : false" color="blue">
-        </a-checkbox>
-      </span>
       <span slot="active" slot-scope="text, record">
         <a-tag v-if="record.active == 1" color="blue">Activo </a-tag>
         <a-tag v-else color="red">Inactivo </a-tag>
       </span>
       <span slot="action" slot-scope="text, record">
-        <a-tag
+        <!-- <a-tag
           color="blue"
           style="cursor: pointer"
-          @click="active(record.idProduct)"
+          @click="active(record.idCategory)"
           ><a-icon type="reload"
-        /></a-tag>
+        /></a-tag> -->
         <a-tag color="blue" style="cursor: pointer" @click="edit(record)"
           ><a-icon type="edit"
         /></a-tag>
@@ -38,7 +34,7 @@
           title="Seguro de eliminar este producto?"
           ok-text="Si"
           cancel-text="No"
-          @confirm="delet(record.idProduct)"
+          @confirm="delet(record.idCategory)"
         >
           <a-tag color="red" style="cursor: pointer"
             ><a-icon type="delete"
@@ -52,33 +48,10 @@
       @ok="handleSubmit"
     >
       <a-form :form="form" @submit="handleSubmit">
-        <a-form-item label="Foto del producto">
-          <a-upload
-            name="file_to_upload"
-            list-type="picture-card"
-            class="avatar-uploader"
-            :show-upload-list="false"
-            action="http://freestyle-backend/api/auth/files/storage"
-            :before-upload="beforeUpload"
-            :headers="headers"
-            @change="handleChangeUpload"
-          >
-            <img
-              v-if="image"
-              width="200px"
-              :src="'http://freestyle-backend' + image"
-              alt="Imagen"
-            />
-            <div v-else>
-              <a-icon :type="loading ? 'loading' : 'plus'" />
-              <div class="ant-upload-text">Subir</div>
-            </div>
-          </a-upload>
-        </a-form-item>
-        <a-form-item label="idProduct" style="display: none">
+        <a-form-item label="idCategory" style="display: none">
           <a-input
             v-decorator="[
-              'idProduct',
+              'idCategory',
               {
                 rules: [
                   { required: false, message: 'Por favor ingrese un nombre' },
@@ -103,83 +76,8 @@
           >
           </a-input>
         </a-form-item>
-        <a-form-item label="Precio">
-          <a-input-number
-            :min="1"
-            v-decorator="[
-              'price',
-              {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Por favor ingrese un precio',
-                  },
-                ],
-              },
-            ]"
-            placeholder="0.00"
-          >
-          </a-input-number>
-        </a-form-item>
 
-        <a-form-item label="Precio antiguo">
-          <a-input-number
-            :min="1"
-            v-decorator="[
-              'price_old',
-              {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Por favor ingrese un precio',
-                  },
-                ],
-              },
-            ]"
-            placeholder="0.00"
-          >
-          </a-input-number>
-        </a-form-item>
-        <a-form-item label="Categoría">
-          <a-select
-            :min="1"
-            show-search
-            option-filter-prop="children"
-            :filter-option="filterOption"
-            v-decorator="[
-              'idCategory',
-              {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Por favor seleccione una categoría',
-                  },
-                ],
-              },
-            ]"
-            placeholder="0.00"
-          >
-            <a-select-option
-              v-for="category in arrayCategories"
-              :key="category.idCategory"
-              :value="category.idCategory"
-            >
-              {{ category.name }}
-            </a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item label="Novedad">
-          <a-checkbox
-            v-decorator="[
-            'novelty',
-           {
-            valuePropName: 'checked',
-
-           }]
-          "
-          >
-          </a-checkbox>
-
+        <a-form-item>
           <!-- <a-button key="back" @click="handleCancel"> Cerrar </a-button>
           <a-button class="btn-primary" type="primary" html-type="submit">
             <a-icon type="save" /> Guardar
@@ -209,34 +107,7 @@ const columns = [
     width: "20%",
     // scopedSlots: { customRender: "name" },
   },
-  {
-    title: "Precio",
-    dataIndex: "price",
-    sorter: true,
-    width: "20%",
-  },
-  {
-    title: "Precio antiguo",
-    dataIndex: "price_old",
-    sorter: true,
-    width: "20%",
-  },
-  {
-    title: "Categoría",
-    dataIndex: "category_name",
-    sorter: true,
-  },
-  {
-    title: "Novedades",
-    key: "novelty",
-    scopedSlots: { customRender: "novelty" },
-  },
 
-  {
-    title: "Estado",
-    key: "active",
-    scopedSlots: { customRender: "active" },
-  },
   {
     title: "Acciones",
     key: "action",
@@ -285,18 +156,10 @@ export default {
   },
 
   mounted() {
-    this.products();
     this.categories();
   },
   computed() {},
   methods: {
-    filterOption(input, option) {
-      return (
-        option.componentOptions.children[0].text
-          .toLowerCase()
-          .indexOf(input.toLowerCase()) >= 0
-      );
-    },
     openModal() {
       let me = this;
       me.visible = true;
@@ -335,13 +198,13 @@ export default {
       let me = this;
       me.id = id;
       axios
-        .delete("/auth/products/" + me.id)
+        .delete("/auth/categories/" + me.id)
         .then(function (response) {
           console.log(response);
           if (response) {
             me.$message.success(response.data.message);
 
-            me.products();
+            me.categories();
           } else {
             me.$message.error(error.response.data.message);
           }
@@ -355,11 +218,11 @@ export default {
       let me = this;
       me.id = id;
       axios
-        .post("/auth/products/active/" + me.id)
+        .post("/auth/categories/active/" + me.id)
         .then(function (response) {
           console.log(response);
           if (response) {
-            me.products();
+            me.categories();
             me.$message.success(response.data.message);
           } else {
             me.$message.error(error.response.data.message);
@@ -376,12 +239,12 @@ export default {
       }
     },
 
-    products() {
+    categories() {
       let me = this;
       me.loading = true;
 
       axios
-        .get("/auth/products?page=" + me.page)
+        .get("/auth/categories?page=" + me.page)
         .then(function (response) {
           let data = response.data;
           const pagination = { ...me.pagination };
@@ -402,55 +265,19 @@ export default {
       me.page = current.current;
       me.products();
     },
-    categories() {
-      let me = this;
-      axios
-        .get("/auth/categories/list")
-        .then(function (response) {
-          me.arrayCategories = response.data.data;
-          console.log(response.data.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
 
-    getProduct(id) {
-      let me = this;
-      axios
-        .get("/auth/products/" + id)
-        .then(function (response) {
-          me.product = response.data.data;
-
-          me.category = { id_category: me.product.id_category };
-          me.id = id;
-          me.accion = 2;
-          me.modal = 1;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-
-    save(product) {
+    save(category) {
       let me = this;
 
       if (me.accion == 1) {
         axios
-          .post("/auth/products", {
-            name: product.name,
-            brand: product.brand,
-            price: product.price,
-            price_old: product.price_old,
-            idCategory: product.idCategory,
-            image: product.image,
-            novelty: product.novelty,
+          .post("/auth/categories", {
+            name: category.name,
           })
           .then(function (response) {
-            me.products();
+            me.categories();
             if (response) {
               me.form.resetFields();
-              me.image = "";
 
               me.$message.success(response.data.message);
 
@@ -464,20 +291,13 @@ export default {
           });
       } else {
         axios
-          .put("/auth/products/" + product.idProduct, {
-            name: product.name,
-            brand: product.brand,
-            price: product.price,
-            price_old: product.price_old,
-            idCategory: product.idCategory,
-            image: product.image,
-            novelty: product.novelty,
+          .put("/auth/categories/" + category.idCategory, {
+            name: category.name,
           })
           .then(function (response) {
-            me.products();
+            me.categories();
             if (response) {
               me.form.resetFields();
-              me.image = "";
 
               me.$message.success(response.data.message);
               me.visible = false;
@@ -502,42 +322,6 @@ export default {
         sortOrder: sorter.order,
         ...filters,
       });
-    },
-
-    handleChangeUpload(info) {
-      let me = this;
-
-      if (info.file.status === "uploading") {
-        me.loading = true;
-        return;
-      }
-      if (info.file.status === "done") {
-        me.image = info.file.response.url;
-
-        // Get this url from response in real world.
-        // getBase64(info.file.originFileObj, (imageUrl) => {
-        //  me.imageUrl = imageUrl;
-        //
-        //
-
-        // });
-        me.loading = false;
-        me.$message.success(
-          "La imagen " + info.file.response.name + " se cargo correctamente"
-        );
-      }
-    },
-    beforeUpload(file) {
-      const isJpgOrPng =
-        file.type === "image/jpeg" || file.type === "image/png";
-      if (!isJpgOrPng) {
-        this.$message.error("You can only upload JPG file!");
-      }
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isLt2M) {
-        this.$message.error("Image must smaller than 2MB!");
-      }
-      return isJpgOrPng && isLt2M;
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-card hoverable class="card-product">
-      <img slot="cover" alt="example" :src="'http://freestyle-backend'+product.image" />
+      <img slot="cover" alt="example" :src="'http://freestyle-backend'+product.image"   width="350px" height="290px"/>
       <a-card-meta :title="product.name" description="">
         <a-avatar slot="avatar" :src="'http://freestyle-backend'+product.image" />
       </a-card-meta>

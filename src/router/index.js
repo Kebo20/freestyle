@@ -27,9 +27,13 @@ const routes = [
 
 
   {
-    path: '/admin/products',
-    name: 'AdminProducts',
-    component: () => import('../views/Admin/Products.vue'),
+    path: '/admin',
+    name: 'Admin',
+    // component: () => import('../views/Admin/Index.vue'),
+    redirect:'/admin/index',
+    component: {
+      render(c) { return c('router-view') }
+    },
     beforeEnter: (to, from, next) => {
       let token = store.state.token
       if (token != '') {
@@ -38,23 +42,31 @@ const routes = [
         next("/login")
       }
 
-    }
+    },
+
+    children: [
+      {
+        path: 'index',
+        name: 'AdminIndex',
+        component: () => import('../views/Admin/Index.vue'),
+
+      },
+      {
+        path: 'categories',
+        name: 'AdminCategories',
+        component: () => import('../views/Admin/Categories.vue'),
+
+      },
+      {
+        path: 'products',
+        name: 'AdminProducts',
+        component: () => import('../views/Admin/Products.vue'),
+
+      },
+    ]
   },
 
-  {
-    path: '/admin/categories',
-    name: 'AdminCategories',
-    component: () => import('../views/Admin/Categories.vue'),
-    beforeEnter: (to, from, next) => {
-      let token = store.state.token
-      if (token != '') {
-        next()
-      } else {
-        next("/login")
-      }
 
-    }
-  },
 
   {
     path: '/login',
