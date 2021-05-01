@@ -20,11 +20,11 @@
             </a-button>
           </a-col>
 
-          <a-col :xs="1">
+          <!-- <a-col :xs="1">
             <a-button class="btn-primary" @click="detail(product)">
               <a-icon type="eye" />
             </a-button>
-          </a-col>
+          </a-col> -->
         </a-row>
       </div>
       <!-- <template slot="actions" class="ant-card-actions">

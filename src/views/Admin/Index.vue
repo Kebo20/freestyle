@@ -2,7 +2,8 @@
   <div>
     <br />
     <br />
-    <a-row>
+
+    <a-row v-show="this.$store.state.responsive ? false : true">
       <a-col :xs="8">
         <router-link to="/admin/products">
           <a-card
@@ -73,17 +74,88 @@
         </router-link>
       </a-col>
     </a-row>
-     <br />
+      <a-row v-show="this.$store.state.responsive ? true : false">
+      <a-col :xs="24">
+        <router-link to="/admin/products">
+          <a-card
+            :bordered="false"
+            :hover="true"
+            class="card-admin"
+            style="width: 80%"
+          >
+            <a-row>
+              <a-col :xs="8">
+                <a-icon type="shop" style="font-size: 60px" theme="twoTone" />
+              </a-col>
+
+              <a-col :xs="12">
+                <p>Productos</p>
+              </a-col>
+            </a-row>
+          </a-card>
+        </router-link>
+      </a-col>
+
+      <a-col :xs="24">
+        <router-link to="/admin/categories">
+          <a-card
+            :bordered="false"
+            :hover="true"
+            class="card-admin"
+            style="width: 80%"
+          >
+            <a-row>
+              <a-col :xs="8">
+                <a-icon
+                  type="file-text"
+                  style="font-size: 60px"
+                  theme="twoTone"
+                />
+              </a-col>
+
+              <a-col :xs="12">
+                <p>Categorias</p>
+              </a-col>
+            </a-row>
+          </a-card>
+        </router-link>
+      </a-col>
+
+      <a-col :xs="24">
+        <router-link to="/admin/products">
+          <a-card
+            :bordered="false"
+            :hover="true"
+            class="card-admin"
+            style="width: 80%"
+          >
+            <a-row>
+              <a-col :xs="8">
+                <a-icon
+                  type="file-text"
+                  style="font-size: 60px"
+                  theme="twoTone"
+                />
+              </a-col>
+              <a-col :xs="8">
+                <p>Almacén</p>
+              </a-col>
+            </a-row>
+          </a-card>
+        </router-link>
+      </a-col>
+    </a-row>
     <br />
-     <br />
     <br />
-     <br />
     <br />
-     <br />
     <br />
-     <br />
     <br />
-     <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     <br />
   </div>
 </template>
