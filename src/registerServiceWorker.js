@@ -21,7 +21,11 @@ import { register } from 'register-service-worker'
     },
     updated () {
       console.log('New content is available; please refresh.')
-      location.reload(true)
+      //ACTUALIZAR CACHE de PWA
+      window.location.reload(true)
+      caches.keys().then(function(names) {
+        for (let name of names) caches.delete(name);
+      });
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')
