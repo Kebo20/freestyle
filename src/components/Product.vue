@@ -44,7 +44,7 @@
     >
       <a-row>
         <a-col :xs="24" :lg="12">
-          <img :src="process.env.VUE_APP_API+product.image" width="270px" />
+          <img :src="process.env.VUE_APP_API+product.image" width="260px" />
         </a-col>
         <a-col :xs="24" :lg="12">
           <a-row>
