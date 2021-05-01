@@ -2,8 +2,7 @@ import axios from 'axios';
 
 
 export default axios.create({
-    baseURL: "https://freestyle-backend.gogazo.com/"+'api',
-
+    baseURL: process.env.VUE_APP_API+'api',
 
     headers: {
         'Content-Type': 'application/json',

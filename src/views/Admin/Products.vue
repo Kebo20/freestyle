@@ -57,7 +57,7 @@
             name="file_to_upload"
             list-type="picture-card"
             class="avatar-uploader"
-            action="https://freestyle-backend.gogazo.com/api/auth/files/storage"
+            :action="process.env.VUE_APP_API+api/auth/files/storage"
             :show-upload-list='false'
             :before-upload="beforeUpload"
             :headers="headers"
@@ -66,7 +66,7 @@
             <img
               v-if="image"
               width="200px"
-              :src="'https://freestyle-backend.gogazo.com/' + image"
+              ::src="'process.env.VUE_APP_API+' + image"
               alt="Imagen"
             />
             <div v-else>
