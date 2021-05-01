@@ -22,7 +22,7 @@ import { register } from 'register-service-worker'
     updated () {
       console.log('New content is available; please refresh.')
       //ACTUALIZAR CACHE de PWA
-      window.location.reload(true)
+      // window.location.reload(true)
       caches.keys().then(function(names) {
         for (let name of names) caches.delete(name);
       });
