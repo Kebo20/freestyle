@@ -9,10 +9,10 @@
         :xl="6"
         v-show="this.$store.state.responsive ? false : true"
       >
-        <menuf />
+        <Menu />
       </a-col>
       <a-col :xs="23" :sm="11" :md="11" :lg="18" :xl="18">
-        <a-carousel autoplay>
+        <a-carousel arrows autoplay>
           <div>
             <img
               height="400px"
@@ -40,6 +40,7 @@
     <br />
 
     <a-row>
+     
       <a-col :xs="24">
         <span
           style="
@@ -63,22 +64,20 @@
             v-for="product in arrayProducts"
             :key="product.idProduct"
           >
-            <Product :product="product"  />
+            <Product :product="product" />
           </a-col>
         </a-row>
       </a-col>
     </a-row>
-
-   
   </div>
 </template>
 <script>
-import menuf from "./Menu";
+import Menu from "../components/Menu.vue";
 import Product from "../components/Product.vue";
 import axios from "../Config/axios";
 
 export default {
-  components: { menuf, Product },
+  components: { Menu, Product },
   data() {
     return {
       data: [
@@ -115,7 +114,6 @@ export default {
       this.$router.push("/products?category=" + route);
     },
 
-  
     handleChange(value) {
       console.log(`selected ${value}`);
     },

@@ -85,7 +85,7 @@
           >
             <a-row>
               <a-col :xs="8">
-                <a-icon type="shop" style="font-size: 60px" theme="twoTone" />
+                <a-icon type="shop" style="font-size: 57px;padding:8px" theme="twoTone" />
               </a-col>
 
               <a-col :xs="12">
@@ -108,7 +108,7 @@
               <a-col :xs="8">
                 <a-icon
                   type="file-text"
-                  style="font-size: 60px"
+                  style="font-size: 57px;padding:8px"
                   theme="twoTone"
                 />
               </a-col>
@@ -133,7 +133,7 @@
               <a-col :xs="8">
                 <a-icon
                   type="file-text"
-                  style="font-size: 60px"
+                  style="font-size: 57px;padding:8px"
                   theme="twoTone"
                 />
               </a-col>

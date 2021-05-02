@@ -12,7 +12,7 @@
         :lg="4"
         :xl="4"
         style="margin-top: 20px"
-        v-show="this.$route.name.search('Admin')>-1?false:true"
+        v-show="this.$route.name.search('Admin') > -1 ? false : true"
       >
         <a-select
           show-search
@@ -24,11 +24,16 @@
           @blur="handleBlur"
           @change="handleChange"
           v-model="category"
-         
         >
-          <a-select-option value='all' >Todas las categorias </a-select-option>
+          <a-select-option value="all">Todas las categorias </a-select-option>
 
-          <a-select-option  v-for="Category in arrayCategories" :value='Category.idCategory' :key="Category.idCategory"> {{ Category.name }} </a-select-option>
+          <a-select-option
+            v-for="Category in arrayCategories"
+            :value="Category.idCategory"
+            :key="Category.idCategory"
+          >
+            {{ Category.name }}
+          </a-select-option>
         </a-select>
       </a-col>
       <a-col
@@ -38,7 +43,7 @@
         :lg="10"
         :xl="10"
         style="margin-top: 20px"
-        v-show="this.$route.name.search('Admin')>-1?false:true"
+        v-show="this.$route.name.search('Admin') > -1 ? false : true"
       >
         <a-input-search
           placeholder="Buscar en la Tienda"
@@ -54,8 +59,7 @@
         :lg="2"
         :xl="2"
         style="margin-top: 20px"
-        v-show="this.$route.name.search('Admin')>-1?false:true"
-
+        v-show="this.$route.name.search('Admin') > -1 ? false : true"
       >
         <a-button style="color: #086fbb">
           <a-icon type="shopping-cart" /> | Carrito</a-button
@@ -71,8 +75,8 @@ export default {
   data() {
     return {
       arrayCategories: [],
-      category:'all',
-      search:''
+      category: "all",
+      search: "",
     };
   },
   mounted() {
@@ -88,13 +92,20 @@ export default {
         })
         .catch(function (error) {});
     },
-    onSearch(){
-      // this.$router.push("/products?category=" + this.category+"&search="+this.search);
-      window.location="/products?category=" + this.category+"&search="+this.search
+    onSearch() {
+      let me = this;
+      me.$store.commit("idCategory", me.category);
+      me.$store.commit("search", me.search);
+      if (me.$route.name.search("products") > -1) {
+        window.location = "/products";
 
+      } else {
+        me.$router.push("/products");
+
+      }
     },
     handleChange(value) {
-      this.category=value
+      this.category = value;
     },
     handleBlur() {
       console.log("blur");

@@ -1,28 +1,12 @@
 <template>
-  <a-list bordered :data-source="arrayCategories" class="div-freestyle">
-    <a-list-item slot="renderItem" slot-scope="item, index">
-      <button
-        style="
-          background-color: transparent;
-          border: none;
-          cursor: pointer;
-          overflow: hidden;
-          outline: none;
-        "
-        @click="link(item.idCategory)"
-      >
-        {{ item.name }}
-      </button>
-    </a-list-item>
-    <div slot="header"><a-icon type="menu" /> <span>Categorías</span></div>
-    <!-- <div slot="footer"></div> -->
-  </a-list>
+  <a-row >
+    <a-col v-for="category in arrayCategories" :key='category.idCategory' :xs='2'><a-tag>{{category.name}} </a-tag></a-col>
+  </a-row>
 </template>
 <script>
 import axios from "../Config/axios";
 
 export default {
-  
   data() {
     return {
       arrayCategories: [],
@@ -39,8 +23,7 @@ export default {
         .then(function (response) {
           me.arrayCategories = response.data.data;
         })
-        .catch(function (error) {
-        });
+        .catch(function (error) {});
     },
     link(route) {
       this.$router.push("/products?category=" + route);

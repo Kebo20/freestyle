@@ -10,7 +10,7 @@
         :after-visible-change="afterVisibleChange"
         @close="onClose"
       >
-        <menuf />
+        <Menu />
       </a-drawer>
     </div>
     <a-layout id="components-layout-demo-responsive">
@@ -132,7 +132,7 @@
             </a-sub-menu> -->
           </a-menu>
         </div>
-        <headerf />
+        <Header />
 
         <!-- </a-layout-header> -->
         <a-layout-content :style="{ margin: '10px 16px 0' }">
@@ -151,12 +151,12 @@
   </div>
 </template>
 <script>
-import headerf from "./views/Header.vue";
-import menuf from "./views/Menu";
+import Header from "./views/Header.vue";
+import Menu from "./components/Menu";
 import axios from "./Config/axios";
 
 export default {
-  components: { headerf, menuf },
+  components: { Header, Menu },
   data() {
     return {
       current: ["mail"],
@@ -213,9 +213,9 @@ export default {
 
     responsive() {
       let me = this;
-      var mql = window.matchMedia("(max-width: 500px)");
+      var mql = window.matchMedia("(max-width: 650px)");
 
-      if (window.matchMedia("(max-width: 500px)").matches) {
+      if (window.matchMedia("(max-width: 650px)").matches) {
         // La media querie coincide
         me.$store.commit("setResponsive", true);
       } else {

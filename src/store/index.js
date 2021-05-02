@@ -9,8 +9,14 @@ export default new Vuex.Store({
     responsive: false,
     user: '',
     rol: '',
-    token: ''
+    token: '',
+    api_url: 'https://freestyle-backend.gogazo.com',
+    idCategory:'',
+    search:'',
+
   },
+
+  //setear estados
   mutations: {
 
     setResponsive(state, responsive) {
@@ -25,7 +31,14 @@ export default new Vuex.Store({
     ,
     token(state, token) {
       state.token = token
+    },
+    idCategory(state, idCategory) {
+      state.idCategory = idCategory
+    },
+    search(state, search) {
+      state.search = search
     }
+    
   },
   actions: {
   },

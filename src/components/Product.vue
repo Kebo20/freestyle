@@ -1,24 +1,42 @@
 <template>
   <div>
-    <a-card hoverable class="card-product">
-      <img slot="cover" alt="example" :src="product.image"   width="350px" height="290px"/>
+    <a-card  class="card-product" @click="detail(product)">
+      <img
+        slot="cover"
+        alt="example"
+        :src="this.$store.state.api_url+product.image"
+        width="350px"
+        height="290px"
+      />
       <a-card-meta :title="product.name" description="">
-        <a-avatar slot="avatar" :src="product.image" />
+        <a-avatar slot="avatar" :src="this.$store.state.api_url+product.image" />
       </a-card-meta>
       <div style="margin-top: 15px">
         <a-row>
-          <a-col :xs="24">
+          <a-col v-show="product.price_old != 0" :xs="14">
             <a-tag
-              style="font-size: 18px; padding: 5px; margin-bottom: 5px"
+              style="
+                font-size: 13px;
+                padding: 5px;
+                margin-bottom: 5px;
+                text-decoration: line-through;
+              "
+              color="black"
+              ><b>S/. {{ product.price_old }} </b></a-tag
+            >
+          </a-col>
+          <a-col :xs="8" style="text-align: right">
+            <a-tag
+              style="font-size: 19px; padding: 5px; margin-bottom: 5px"
               color="blue"
               ><b>S/. {{ product.price }} </b></a-tag
             >
           </a-col>
-          <a-col :xs="16">
+          <!-- <a-col :xs="24">
             <a-button class="btn-primary">
               <a-icon type="shopping-cart" /> Añadir al carrito
             </a-button>
-          </a-col>
+          </a-col> -->
 
           <!-- <a-col :xs="1">
             <a-button class="btn-primary" @click="detail(product)">
@@ -36,27 +54,42 @@
 
     <!-- Modal Producto -->
 
-    <a-modal
-      v-model="visible"
-      :title="product.name"
-      @ok="handleOk"
-      :dialog-style="{ right: '100px' }"
-    >
+    <a-modal v-model="visible" :title="product.name" @ok="handleOk">
       <a-row>
-        <a-col :xs="24" :lg="12">
-          <img :src="product.image" width="260px" />
+        <a-col :xs="24" :lg="24" style="text-align: center;margin-bottom:20px">
+          <img :src="this.$store.state.api_url+product.image" width="290px" />
         </a-col>
-        <a-col :xs="24" :lg="12">
+
+         <a-col :xs="24" :lg="24" style="margin-bottom:10px;font-size:20px;color:black">
+              <p><b>{{ product.name }}</b></p>
+
+        </a-col>
+        <a-col :xs="24" :lg="24">
           <a-row>
-            <a-col :xs="16">
+            <a-col v-show="product.price_old != 0" :xs="8" style="text-align:right">
               <a-tag
-                style="font-size: 18px; padding: 5px; margin-bottom: 5px"
-                color="blue"
-                ><b>S/. {{ product.price }} </b></a-tag
+                style="
+                  font-size: 13px;
+                  padding: 5px;
+                  margin-bottom: 5px;
+                  text-decoration: line-through;
+                  text-align:right
+                "
+                color="black"
+                ><b>S/. {{ product.price_old }} </b></a-tag
               >
             </a-col>
+            <a-col :xs="12" style="text-align:left">
+              <a-tag
+                style="font-size: 18px; padding: 5px; margin-bottom: 25px;"
+                color="blue"
+                ><b>Ahora: S/. {{ product.price }} </b></a-tag
+              >
+              
+            </a-col>
 
-            <a-col :xs="16">
+            <a-col :xs="24">
+              
               <p>{{ product.description }}</p>
             </a-col>
             <a-col :xs="16"> </a-col>
