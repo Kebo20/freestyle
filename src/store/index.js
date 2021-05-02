@@ -10,7 +10,7 @@ export default new Vuex.Store({
     user: '',
     rol: '',
     token: '',
-    api_url: 'https://freestyle-backend.gogazo.com',
+    api_url: '',
     idCategory:'',
     search:'',
 
@@ -37,6 +37,10 @@ export default new Vuex.Store({
     },
     search(state, search) {
       state.search = search
+    },
+
+    api_url(state, api_url) {
+      state.api_url = api_url
     }
     
   },

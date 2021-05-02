@@ -7,41 +7,42 @@
     </a-button-group>
     <br />
     <br />
-
-    <a-table
-      :columns="columns"
-      :data-source="data"
-      :pagination="pagination"
-      :loading="loading"
-      @change="onChangePage"
-      :scroll="{ x: 700 }"
-    >
-      <span slot="active" slot-scope="text, record">
-        <a-tag v-if="record.active == 1" color="blue">Activo </a-tag>
-        <a-tag v-else color="red">Inactivo </a-tag>
-      </span>
-      <span slot="action" slot-scope="text, record">
-        <!-- <a-tag
+    <a-card style="width:50%">
+      <a-table
+        :columns="columns"
+        :data-source="data"
+        :pagination="pagination"
+        :loading="loading"
+        @change="onChangePage"
+        :scroll="{ x: 700 }"
+      >
+        <span slot="active" slot-scope="text, record">
+          <a-tag v-if="record.active == 1" color="blue">Activo </a-tag>
+          <a-tag v-else color="red">Inactivo </a-tag>
+        </span>
+        <span slot="action" slot-scope="text, record">
+          <!-- <a-tag
           color="blue"
           style="cursor: pointer"
           @click="active(record.idCategory)"
           ><a-icon type="reload"
         /></a-tag> -->
-        <a-tag color="blue" style="cursor: pointer" @click="edit(record)"
-          ><a-icon type="edit"
-        /></a-tag>
-        <a-popconfirm
-          title="Seguro de eliminar este producto?"
-          ok-text="Si"
-          cancel-text="No"
-          @confirm="delet(record.idCategory)"
-        >
-          <a-tag color="red" style="cursor: pointer"
-            ><a-icon type="delete"
+          <a-tag color="blue" style="cursor: pointer" @click="edit(record)"
+            ><a-icon type="edit"
           /></a-tag>
-        </a-popconfirm>
-      </span>
-    </a-table>
+          <a-popconfirm
+            title="Seguro de eliminar este producto?"
+            ok-text="Si"
+            cancel-text="No"
+            @confirm="delet(record.idCategory)"
+          >
+            <a-tag color="red" style="cursor: pointer"
+              ><a-icon type="delete"
+            /></a-tag>
+          </a-popconfirm>
+        </span>
+      </a-table>
+    </a-card>
     <a-modal
       v-model="visible"
       :title="accion == 1 ? 'Registrar Producto' : 'Actualizar Producto'"
@@ -104,7 +105,7 @@ const columns = [
     title: "Nombre",
     dataIndex: "name",
     sorter: true,
-    width: "20%",
+    width: "40%",
     // scopedSlots: { customRender: "name" },
   },
 
@@ -112,6 +113,8 @@ const columns = [
     title: "Acciones",
     key: "action",
     scopedSlots: { customRender: "action" },
+    width: "20%",
+
   },
 ];
 

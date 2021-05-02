@@ -165,6 +165,7 @@ export default {
   },
   mounted() {
     this.responsive();
+    this.$store.commit("api_url", "https://freestyle-backend.gogazo.com");
   },
   methods: {
     onCollapse(collapsed, type) {

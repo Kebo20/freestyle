@@ -11,7 +11,7 @@
       >
         <Menu />
       </a-col>
-      <a-col :xs="23" :sm="11" :md="11" :lg="18" :xl="18">
+      <a-col :xs="23" :sm="11" :md="11" :lg="18" :xl="18" v-show="this.$store.state.responsive ? false : true">
         <a-carousel arrows autoplay>
           <div>
             <img
@@ -30,6 +30,31 @@
           <div>
             <img
               height="400px"
+              width="100%"
+              src="https://phantom.pe/pub/media/wysiwyg/slider-razer.jpg"
+            />
+          </div>
+        </a-carousel>
+      </a-col>
+      <a-col  :xs="24" :sm="11" :md="11" :lg="18" :xl="18" v-show="this.$store.state.responsive">
+        <a-carousel arrows autoplay >
+          <div>
+            <img
+              height="300px"
+              width="100%"
+              src="https://phantom.pe/pub/media/wysiwyg/slider-corsair.jpg"
+            />
+          </div>
+          <div>
+            <img
+              height="300px"
+              width="100%"
+              src="https://phantom.pe/pub/media/wysiwyg/banner-semana-santa2.jpg"
+            />
+          </div>
+          <div>
+            <img
+              height="300px"
               width="100%"
               src="https://phantom.pe/pub/media/wysiwyg/slider-razer.jpg"
             />
@@ -139,7 +164,7 @@ export default {
   text-align: center;
   height: 400px;
   line-height: 160px;
-  background: #364d79;
+  background: #a6b2c7;
   overflow: hidden;
 }
 
@@ -150,5 +175,15 @@ export default {
   /* background: linear-gradient(-180deg, #086FBB 1%, #232323 99%) ; */
   background-color: #033254;
   color: white;
+}
+
+@media screen and (max-width: 650px) {
+  .ant-carousel >>> .slick-slide {
+  text-align: center;
+  height: 300px;
+  line-height: 160px;
+  background: #a6b2c7;
+  overflow: hidden;
+}
 }
 </style>

@@ -7,7 +7,7 @@
     </a-button-group>
     <br />
     <br />
-
+<a-card>
     <a-table
       :columns="columns"
       :data-source="data"
@@ -46,6 +46,7 @@
         </a-popconfirm>
       </span>
     </a-table>
+</a-card>    
     <a-modal
       v-model="visible"
       :title="accion == 1 ? 'Registrar Producto' : 'Actualizar Producto'"
@@ -57,7 +58,7 @@
             name="file_to_upload"
             list-type="picture-card"
             class="avatar-uploader"
-            :action="this.$store.state.api_url+'api/auth/files/storage'"
+            :action="this.$store.state.api_url+'/api/auth/files/storage'"
             :show-upload-list='false'
             :before-upload="beforeUpload"
             :headers="headers"
@@ -206,41 +207,49 @@ const columns = [
     title: "Nombre",
     dataIndex: "name",
     sorter: true,
-    width: "20%",
+    width: "25%",
     // scopedSlots: { customRender: "name" },
   },
   {
     title: "Precio",
     dataIndex: "price",
     sorter: true,
-    width: "20%",
+    width: "10%",
   },
   {
     title: "Precio antiguo",
     dataIndex: "price_old",
     sorter: true,
-    width: "20%",
+    width: "10%",
   },
   {
     title: "Categoría",
     dataIndex: "category_name",
     sorter: true,
+    width: "20%",
+
   },
   {
     title: "Novedades",
     key: "novelty",
     scopedSlots: { customRender: "novelty" },
+    width: "10%",
+
   },
 
   {
     title: "Estado",
     key: "active",
     scopedSlots: { customRender: "active" },
+    width: "10%",
+
   },
   {
     title: "Acciones",
     key: "action",
     scopedSlots: { customRender: "action" },
+    width: "15%",
+
   },
 ];
 
