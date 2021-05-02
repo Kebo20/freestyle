@@ -12,6 +12,7 @@
         :lg="4"
         :xl="4"
         style="margin-top: 20px"
+        v-if="this.$store.state.responsive? false : true"
         v-show="this.$route.name.search('Admin') > -1 ? false : true"
       >
         <a-select

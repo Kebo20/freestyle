@@ -5,8 +5,8 @@
         slot="cover"
         alt="example"
         :src="this.$store.state.api_url+product.image"
-        width="350px"
-        height="290px"
+        width="300px"
+        height="300px"
       />
       <a-card-meta :title="product.name" description="">
         <a-avatar slot="avatar" :src="this.$store.state.api_url+product.image" />
@@ -54,19 +54,19 @@
 
     <!-- Modal Producto -->
 
-    <a-modal v-model="visible" :title="product.name" @ok="handleOk">
+    <a-modal v-model="visible" :title="p.name" @ok="handleOk">
       <a-row>
         <a-col :xs="24" :lg="24" style="text-align: center;margin-bottom:20px">
-          <img :src="this.$store.state.api_url+product.image" width="290px" />
+          <img :src="this.$store.state.api_url+p.image" width="290px" />
         </a-col>
 
          <a-col :xs="24" :lg="24" style="margin-bottom:10px;font-size:20px;color:black">
-              <p><b>{{ product.name }}</b></p>
+              <p><b>{{ p.name }}</b></p>
 
         </a-col>
         <a-col :xs="24" :lg="24">
           <a-row>
-            <a-col v-show="product.price_old != 0" :xs="8" style="text-align:right">
+            <a-col v-show="p.price_old != 0" :xs="8" style="text-align:right">
               <a-tag
                 style="
                   font-size: 13px;
@@ -76,21 +76,21 @@
                   text-align:right
                 "
                 color="black"
-                ><b>S/. {{ product.price_old }} </b></a-tag
+                ><b>S/. {{ p.price_old }} </b></a-tag
               >
             </a-col>
             <a-col :xs="12" style="text-align:left">
               <a-tag
                 style="font-size: 18px; padding: 5px; margin-bottom: 25px;"
                 color="blue"
-                ><b>Ahora: S/. {{ product.price }} </b></a-tag
+                ><b>Ahora: S/. {{ p.price }} </b></a-tag
               >
               
             </a-col>
 
             <a-col :xs="24">
               
-              <p>{{ product.description }}</p>
+              <p>{{ p.description }}</p>
             </a-col>
             <a-col :xs="16"> </a-col>
           </a-row>
@@ -121,7 +121,7 @@ export default {
   data() {
     return {
       visible: false,
-      product: [],
+      p: [],
     };
   },
   methods: {
@@ -130,7 +130,7 @@ export default {
     },
     detail(a) {
       this.visible = true;
-      this.product = a;
+      this.p = a;
     },
     handleOk() {},
     handleCancel() {

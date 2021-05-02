@@ -34,10 +34,12 @@
         </div>
       </a-col>
 
-      <a-col :xs="this.$store.state.responsive ?24:17">
-        <a-tag color="#033254" style="font-size: 20px; padding: 5px"
+      <a-col :xs="this.$store.state.responsive ?24:17" >
+        <div style="overflow-x:scroll;">
+        <a-tag color="#033254" style="font-size: 21px; padding: 4px;"
           ><b> {{ category.name }} </b>
         </a-tag>
+        </div>
         <a-row>
           <a-col
             :xs="13"

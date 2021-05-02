@@ -9,8 +9,9 @@
         :visible="visible"
         :after-visible-change="afterVisibleChange"
         @close="onClose"
+        
       >
-        <Menu />
+        <Menu @select="onClose" />
       </a-drawer>
     </div>
     <a-layout id="components-layout-demo-responsive">
