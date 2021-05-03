@@ -16,7 +16,7 @@
     <a-layout id="components-layout-demo-responsive">
       <a-layout>
         <!-- <a-layout-header :style="{ background: 'linear-gradient(-90deg, #086FBB 8%, #00c9db 92%)', padding: 0 }"> -->
-        <div v-if="this.$store.state.responsive">
+        <div style="text-align:right;">
           <a-menu
             v-model="current"
             mode="horizontal"
@@ -25,76 +25,29 @@
               background: 'linear-gradient(-90deg, #086FBB 8%, #232323 92%) ',
               padding: 0,
             }"
+           
           >
-            <a-menu-item key="" @click="showDrawer">
+            <a-menu-item  v-if='this.$store.state.responsive' key="drawer" @click="showDrawer">
               <a-icon type="unordered-list" />
             </a-menu-item>
-            <a-menu-item v-if="this.$store.state.rol != ''" key="mail">
+            <a-menu-item v-if="this.$store.state.rol != ''" key="admin">
               <router-link to="/admin">
                 <a-icon type="safety-certificate" />ADMIN
               </router-link>
             </a-menu-item>
-            <a-menu-item key="mail" @click="link('')">
-              <a-icon type="shop" />Inicio
-            </a-menu-item>
-            <a-menu-item
-              key="mail"
-              @click="redirect('https://www.facebook.com/freestyle2911')"
-            >
-              <a-icon type="facebook" />Facebook
-            </a-menu-item>
-            <a-menu-item
-              key="instagram"
-              @click="redirect('https://www.facebook.com/freestyle2911')"
-            >
-              <a-icon type="instagram" />Instagram
-            </a-menu-item>
-            <a-menu-item v-if="this.$store.state.rol == ''" key="login">
-              <router-link to="/login">
-                <a-icon type="login" />Ingresar
-              </router-link>
-            </a-menu-item>
-            <a-menu-item
-              v-if="this.$store.state.rol != ''"
-              key="logout"
-              @click="logout"
-            >
-              <a-icon type="logout" />Salir
-            </a-menu-item>
-          </a-menu>
-        </div>
-        <div v-else align="right">
-          <a-menu
-            v-model="current"
-            mode="horizontal"
-            class="navBar"
-            :style="{
-              background: 'linear-gradient(-90deg, #086FBB 8%, #232323 92%) ',
-              padding: 0,
-            }"
-          >
-            <a-menu-item v-if="this.$store.state.rol != ''" key="mail">
-              <router-link to="/admin">
-                <a-icon type="safety-certificate" />ADMIN
-              </router-link>
-            </a-menu-item>
-            <a-menu-item key="mail">
+            <a-menu-item key="home" >
               <router-link to="/"> <a-icon type="shop" />Inicio </router-link>
             </a-menu-item>
-            <a-menu-item
-              key="mail"
+              <a-menu-item
+              key="fb"
             >
-             <a href="'https://www.facebook.com/freestyle2911'" target="_blank"><a-icon type="facebook" />Facebook </a> 
+             <a href="https://www.facebook.com/freestyle2911" target="_blank"><a-icon type="facebook" />Facebook </a> 
             </a-menu-item>
             <a-menu-item
-              key="instagram"
+              key="ig"
             >
-             <a href="'https://www.facebook.com/freestyle2911'" target="_blank"> <a-icon type="instagram" />Instagram </a> 
+             <a href="https://www.facebook.com/freestyle2911" target="_blank"> <a-icon type="instagram" />Instagram </a> 
             </a-menu-item>
-            <!-- <a-menu-item key="login" @click="link('login')">
-              <a-icon type="user-add" />Registrarse
-            </a-menu-item> -->
-
             <a-menu-item v-if="this.$store.state.rol == ''" key="login">
               <router-link to="/login">
                 <a-icon type="login" />Ingresar
@@ -107,21 +60,9 @@
             >
               <a-icon type="logout" />Salir
             </a-menu-item>
-            <!-- <a-sub-menu>
-              <span slot="title" class="submenu-title-wrapper"
-                ><a-icon type="setting" />Navigation Three - Submenu</span
-              >
-               <a-menu-item-group title="Item 1" > 
-              <a-menu-item key="setting:1"> Option 1 </a-menu-item>
-              <a-menu-item key="setting:2"> Option 2 </a-menu-item>
-               </a-menu-item-group> 
-               <a-menu-item-group title="Item 2" > 
-              <a-menu-item key="setting:3"> Option 3 </a-menu-item>
-              <a-menu-item key="setting:4"> Option 4 </a-menu-item>
-               </a-menu-item-group> 
-            </a-sub-menu> -->
           </a-menu>
         </div>
+     
         <Header />
 
         <!-- </a-layout-header> -->
@@ -254,6 +195,10 @@ export default {
 .navBar .ant-menu-submenu-title:hover {
   color: #fff !important;
   /* border-bottom: 1px solid #fff !important; */
+}
+
+.navBar a {
+  color: #fff  !important;
 }
 </style>
 
