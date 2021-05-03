@@ -9,7 +9,6 @@
         :visible="visible"
         :after-visible-change="afterVisibleChange"
         @close="onClose"
-        
       >
         <Menu @select="onClose" />
       </a-drawer>
@@ -30,12 +29,10 @@
             <a-menu-item key="" @click="showDrawer">
               <a-icon type="unordered-list" />
             </a-menu-item>
-            <a-menu-item
-              v-if="this.$store.state.rol != ''"
-              key="mail"
-              @click="link('admin')"
-            >
-              <a-icon type="safety-certificate" />ADMIN
+            <a-menu-item v-if="this.$store.state.rol != ''" key="mail">
+              <router-link to="/admin">
+                <a-icon type="safety-certificate" />ADMIN
+              </router-link>
             </a-menu-item>
             <a-menu-item key="mail" @click="link('')">
               <a-icon type="shop" />Inicio
@@ -52,12 +49,10 @@
             >
               <a-icon type="instagram" />Instagram
             </a-menu-item>
-            <a-menu-item
-              v-if="this.$store.state.rol == ''"
-              key="login"
-              @click="link('login')"
-            >
-              <a-icon type="login" />Ingresar
+            <a-menu-item v-if="this.$store.state.rol == ''" key="login">
+              <router-link to="/login">
+                <a-icon type="login" />Ingresar
+              </router-link>
             </a-menu-item>
             <a-menu-item
               v-if="this.$store.state.rol != ''"
@@ -78,38 +73,32 @@
               padding: 0,
             }"
           >
-            <a-menu-item
-              v-if="this.$store.state.rol != ''"
-              key="mail"
-              @click="link('admin')"
-            >
-              <a-icon type="safety-certificate" />ADMIN
+            <a-menu-item v-if="this.$store.state.rol != ''" key="mail">
+              <router-link to="/admin">
+                <a-icon type="safety-certificate" />ADMIN
+              </router-link>
             </a-menu-item>
-            <a-menu-item key="mail" @click="link('')">
-              <a-icon type="shop" />Inicio
+            <a-menu-item key="mail">
+              <router-link to="/"> <a-icon type="shop" />Inicio </router-link>
             </a-menu-item>
             <a-menu-item
               key="mail"
-              @click="redirect('https://www.facebook.com/freestyle2911')"
             >
-              <a-icon type="facebook" />Facebook
+             <a href="'https://www.facebook.com/freestyle2911'" target="_blank"><a-icon type="facebook" />Facebook </a> 
             </a-menu-item>
             <a-menu-item
               key="instagram"
-              @click="redirect('https://www.facebook.com/freestyle2911')"
             >
-              <a-icon type="instagram" />Instagram
+             <a href="'https://www.facebook.com/freestyle2911'" target="_blank"> <a-icon type="instagram" />Instagram </a> 
             </a-menu-item>
             <!-- <a-menu-item key="login" @click="link('login')">
               <a-icon type="user-add" />Registrarse
             </a-menu-item> -->
 
-            <a-menu-item
-              v-if="this.$store.state.rol == ''"
-              key="login"
-              @click="link('login')"
-            >
-              <a-icon type="login" />Ingresar
+            <a-menu-item v-if="this.$store.state.rol == ''" key="login">
+              <router-link to="/login">
+                <a-icon type="login" />Ingresar
+              </router-link>
             </a-menu-item>
             <a-menu-item
               v-if="this.$store.state.rol != ''"

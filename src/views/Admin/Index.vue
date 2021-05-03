@@ -81,7 +81,7 @@
             :bordered="false"
             :hover="true"
             class="card-admin"
-            style="width: 80%"
+            style="width: 100%"
           >
             <a-row>
               <a-col :xs="8">
@@ -102,7 +102,7 @@
             :bordered="false"
             :hover="true"
             class="card-admin"
-            style="width: 80%"
+            style="width: 100%"
           >
             <a-row>
               <a-col :xs="8">
@@ -127,7 +127,7 @@
             :bordered="false"
             :hover="true"
             class="card-admin"
-            style="width: 80%"
+            style="width: 100%"
           >
             <a-row>
               <a-col :xs="8">

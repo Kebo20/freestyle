@@ -3,7 +3,9 @@
     <a-row class="header" style="padding: 30px">
       <a-col :xs="23" :sm="11" :md="11" :lg="1" :xl="1"> </a-col>
       <a-col :xs="23" :sm="11" :md="11" :lg="6" :xl="6">
-        <span style="color: white; font-size: 50px">FreeStyle</span>
+        <router-link to="/">
+          <span style="color: white; font-size: 50px">FreeStyle</span>
+        </router-link>
       </a-col>
       <a-col
         :xs="23"
@@ -12,7 +14,7 @@
         :lg="4"
         :xl="4"
         style="margin-top: 20px"
-        v-if="this.$store.state.responsive? false : true"
+        v-if="this.$store.state.responsive ? false : true"
         v-show="this.$route.name.search('Admin') > -1 ? false : true"
       >
         <a-select
@@ -99,10 +101,8 @@ export default {
       me.$store.commit("search", me.search);
       if (me.$route.name.search("products") > -1) {
         window.location = "/products";
-
       } else {
         me.$router.push("/products");
-
       }
     },
     handleChange(value) {
