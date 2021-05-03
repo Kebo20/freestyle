@@ -15,9 +15,11 @@ module.exports = {
       },
     },
   },
-  // pwa: { //CACHE PWA
-  //   workboxOptions: {
-  //     skipWaiting: true
-  //   }
-  // }
+  pwa: { //CACHE PWA
+    workboxOptions: {
+      skipWaiting: true
+    },
+    themeColor: '#033254',
+    msTileColor: '#000000',
+  }
 };
