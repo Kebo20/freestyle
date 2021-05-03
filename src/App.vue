@@ -16,7 +16,7 @@
     <a-layout id="components-layout-demo-responsive">
       <a-layout>
         <!-- <a-layout-header :style="{ background: 'linear-gradient(-90deg, #086FBB 8%, #00c9db 92%)', padding: 0 }"> -->
-        <div style="text-align:right;">
+        <div :style="this.$store.state.responsive?'text-align:left;':'text-align:right;'">
           <a-menu
             v-model="current"
             mode="horizontal"
