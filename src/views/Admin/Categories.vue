@@ -7,7 +7,7 @@
     </a-button-group>
     <br />
     <br />
-    <a-card style="width:50%">
+    <a-card style="max-width:100%">
       <a-table
         :columns="columns"
         :data-source="data"
@@ -105,7 +105,7 @@ const columns = [
     title: "Nombre",
     dataIndex: "name",
     sorter: true,
-    width: "40%",
+    width: "30%",
     // scopedSlots: { customRender: "name" },
   },
 
@@ -113,7 +113,7 @@ const columns = [
     title: "Acciones",
     key: "action",
     scopedSlots: { customRender: "action" },
-    width: "20%",
+    width: "10%",
 
   },
 ];
