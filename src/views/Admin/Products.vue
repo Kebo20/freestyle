@@ -7,46 +7,49 @@
     </a-button-group>
     <br />
     <br />
-<a-card>
-    <a-table
-      :columns="columns"
-      :data-source="data"
-      :pagination="pagination"
-      :loading="loading"
-      @change="onChangePage"
-      :scroll="{ x: 700 }"
-    >
-      <span slot="novelty" slot-scope="text, record">
-        <a-checkbox :checked="record.novelty == 1 ? true : false" color="blue">
-        </a-checkbox>
-      </span>
-      <span slot="active" slot-scope="text, record">
-        <a-tag v-if="record.active == 1" color="blue">Activo </a-tag>
-        <a-tag v-else color="red">Inactivo </a-tag>
-      </span>
-      <span slot="action" slot-scope="text, record">
-        <a-tag
-          color="blue"
-          style="cursor: pointer"
-          @click="active(record.idProduct)"
-          ><a-icon type="reload"
-        /></a-tag>
-        <a-tag color="blue" style="cursor: pointer" @click="edit(record)"
-          ><a-icon type="edit"
-        /></a-tag>
-        <a-popconfirm
-          title="Seguro de eliminar este producto?"
-          ok-text="Si"
-          cancel-text="No"
-          @confirm="delet(record.idProduct)"
-        >
-          <a-tag color="red" style="cursor: pointer"
-            ><a-icon type="delete"
+    <a-card>
+      <a-table
+        :columns="columns"
+        :data-source="data"
+        :pagination="pagination"
+        :loading="loading"
+        @change="onChangePage"
+        :scroll="{ x: 700 }"
+      >
+        <span slot="novelty" slot-scope="text, record">
+          <a-checkbox
+            :checked="record.novelty == 1 ? true : false"
+            color="blue"
+          >
+          </a-checkbox>
+        </span>
+        <span slot="active" slot-scope="text, record">
+          <a-tag v-if="record.active == 1" color="blue">Activo </a-tag>
+          <a-tag v-else color="red">Inactivo </a-tag>
+        </span>
+        <span slot="action" slot-scope="text, record">
+          <a-tag
+            color="blue"
+            style="cursor: pointer"
+            @click="active(record.idProduct)"
+            ><a-icon type="reload"
           /></a-tag>
-        </a-popconfirm>
-      </span>
-    </a-table>
-</a-card>    
+          <a-tag color="blue" style="cursor: pointer" @click="edit(record)"
+            ><a-icon type="edit"
+          /></a-tag>
+          <a-popconfirm
+            title="Seguro de eliminar este producto?"
+            ok-text="Si"
+            cancel-text="No"
+            @confirm="delet(record.idProduct)"
+          >
+            <a-tag color="red" style="cursor: pointer"
+              ><a-icon type="delete"
+            /></a-tag>
+          </a-popconfirm>
+        </span>
+      </a-table>
+    </a-card>
     <a-modal
       v-model="visible"
       :title="accion == 1 ? 'Registrar Producto' : 'Actualizar Producto'"
@@ -58,8 +61,8 @@
             name="file_to_upload"
             list-type="picture-card"
             class="avatar-uploader"
-            :action="this.$store.state.api_url+'/api/auth/files/storage'"
-            :show-upload-list='false'
+            :action="this.$store.state.api_url + '/api/auth/files/storage'"
+            :show-upload-list="false"
             :before-upload="beforeUpload"
             :headers="headers"
             @change="handleChangeUpload"
@@ -67,7 +70,7 @@
             <img
               v-if="image"
               width="200px"
-              :src="this.$store.state.api_url+image"
+              :src="this.$store.state.api_url + image"
               alt="Imagen"
             />
             <div v-else>
@@ -104,6 +107,26 @@
           >
           </a-input>
         </a-form-item>
+
+        <a-form-item label="Descripción">
+          <a-input
+            v-decorator="[
+              'description',
+              {
+                rules: [
+                  {
+                    required: true,
+                    message:
+                      'Por favor ingrese un breve descripción del producto',
+                  },
+                ],
+              },
+            ]"
+            placeholder="Descripción"
+          >
+          </a-input>
+        </a-form-item>
+
         <a-form-item label="Precio">
           <a-input-number
             :min="1"
@@ -172,12 +195,11 @@
         <a-form-item label="Novedad">
           <a-checkbox
             v-decorator="[
-            'novelty',
-           {
-            valuePropName: 'checked',
-
-           }]
-          "
+              'novelty',
+              {
+                valuePropName: 'checked',
+              },
+            ]"
           >
           </a-checkbox>
 
@@ -207,49 +229,45 @@ const columns = [
     title: "Nombre",
     dataIndex: "name",
     sorter: true,
-    width: "25%",
+    width: "250px",
     // scopedSlots: { customRender: "name" },
   },
   {
     title: "Precio",
     dataIndex: "price",
     sorter: true,
-    width: "10%",
+    width: "150px",
   },
   {
-    title: "Precio antiguo",
+    title: "P. Antiguo",
     dataIndex: "price_old",
     sorter: true,
-    width: "10%",
+    width: "150px",
   },
   {
     title: "Categoría",
     dataIndex: "category_name",
     sorter: true,
-    width: "20%",
-
+    width: "240px",
   },
   {
     title: "Novedades",
     key: "novelty",
     scopedSlots: { customRender: "novelty" },
-    width: "10%",
-
+    width: "120px",
   },
 
   {
     title: "Estado",
     key: "active",
     scopedSlots: { customRender: "active" },
-    width: "10%",
-
+    width: "150px",
   },
   {
     title: "Acciones",
     key: "action",
     scopedSlots: { customRender: "action" },
-    width: "15%",
-
+    width: "200px",
   },
 ];
 
@@ -265,7 +283,7 @@ export default {
 
   data() {
     return {
-      accion:0,
+      accion: 0,
       arrayProducts: [],
       product: {
         code: "",
@@ -449,6 +467,7 @@ export default {
         axios
           .post("/auth/products", {
             name: product.name,
+            description: product.description,
             brand: product.brand,
             price: product.price,
             price_old: product.price_old,
@@ -476,6 +495,7 @@ export default {
         axios
           .put("/auth/products/" + product.idProduct, {
             name: product.name,
+            description: product.description,
             brand: product.brand,
             price: product.price,
             price_old: product.price_old,

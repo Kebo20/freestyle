@@ -62,7 +62,7 @@
         :md="11"
         :lg="2"
         :xl="2"
-        style="margin-top: 20px"
+        style="margin-top: 20px;display:none"
         v-show="this.$route.name.search('Admin') > -1 ? false : true"
         v-if="this.$store.state.responsive ? false : true"
       >

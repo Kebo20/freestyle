@@ -50,7 +50,7 @@
         </router-link>
       </a-col>
 
-      <a-col :xs="8">
+      <!-- <a-col :xs="8">
         <router-link to="/admin/products">
           <a-card
             :bordered="false"
@@ -72,7 +72,7 @@
             </a-row>
           </a-card>
         </router-link>
-      </a-col>
+      </a-col> -->
     </a-row>
       <a-row v-show="this.$store.state.responsive ? true : false">
       <a-col :xs="24">
@@ -121,19 +121,19 @@
         </router-link>
       </a-col>
 
-      <a-col :xs="24">
+      <!-- <a-col :xs="24">
         <router-link to="/admin/products">
           <a-card
             :bordered="false"
             :hover="true"
             class="card-admin"
-            style="width: 100%"
+            style="width: 100%;"
           >
             <a-row>
               <a-col :xs="8">
                 <a-icon
                   type="file-text"
-                  style="font-size: 57px;padding:8px"
+                  style="font-size: 57px;padding:8px;"
                   theme="twoTone"
                 />
               </a-col>
@@ -143,7 +143,7 @@
             </a-row>
           </a-card>
         </router-link>
-      </a-col>
+      </a-col> -->
     </a-row>
     <br />
     <br />

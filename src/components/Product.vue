@@ -129,8 +129,8 @@ export default {
       this.$emit("detailProduct", product);
     },
     detail(a) {
-      this.visible = true;
-      this.p = a;
+      // this.visible = true;
+      // this.p = a;
     },
     handleOk() {},
     handleCancel() {
