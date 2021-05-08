@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div  style="overflow-x: hidden;">
     <a-row>
       <a-col
         :xs="23"
@@ -15,21 +15,21 @@
         <a-carousel arrows autoplay>
           <div>
             <img
-              height="400px"
+              height="500px"
               width="100%"
               src="https://phantom.pe/pub/media/wysiwyg/slider-corsair.jpg"
             />
           </div>
           <div>
             <img
-              height="400px"
+              height="500px"
               width="100%"
               src="https://phantom.pe/pub/media/wysiwyg/banner-semana-santa2.jpg"
             />
           </div>
           <div>
             <img
-              height="400px"
+              height="500px"
               width="100%"
               src="https://phantom.pe/pub/media/wysiwyg/slider-razer.jpg"
             />
@@ -162,7 +162,7 @@ export default {
 /* For demo */
 .ant-carousel >>> .slick-slide {
   text-align: center;
-  height: 400px;
+  height: 500px;
   line-height: 160px;
   background: #a6b2c7;
   overflow: hidden;

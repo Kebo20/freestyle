@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-row class="header" style="padding: 30px">
+    <a-row class="header" style="padding: 15px">
       <a-col :xs="23" :sm="11" :md="11" :lg="1" :xl="1"> </a-col>
       <a-col :xs="23" :sm="11" :md="11" :lg="6" :xl="6">
         <router-link to="/">
@@ -47,6 +47,7 @@
         :xl="10"
         style="margin-top: 20px"
         v-show="this.$route.name.search('Admin') > -1 ? false : true"
+        v-if="this.$store.state.responsive ? true : true"
       >
         <a-input-search
           placeholder="Buscar en la Tienda"
@@ -63,11 +64,31 @@
         :xl="2"
         style="margin-top: 20px"
         v-show="this.$route.name.search('Admin') > -1 ? false : true"
+        v-if="this.$store.state.responsive ? false : true"
       >
         <a-button style="color: #086fbb">
           <a-icon type="shopping-cart" /> | Carrito</a-button
         >
       </a-col>
+    </a-row>
+    <a-row>
+      <!-- <a-col
+        :xs="23"
+        :sm="11"
+        :md="11"
+        :lg="10"
+        :xl="10"
+        style="margin: 10px"
+        v-show="this.$route.name.search('Admin') > -1 ? false : true"
+        v-if="this.$store.state.responsive"
+      >
+        <a-input-search
+          placeholder="Buscar en la Tienda"
+          style="width: 100%"
+          @search="onSearch"
+          v-model="search"
+        />
+      </a-col> -->
     </a-row>
   </div>
 </template>
@@ -126,6 +147,8 @@ export default {
 </script>
 <style scoped>
 .header {
-  background: linear-gradient(-90deg, #086fbb 1%, #232323 99%) !important;
+  /* background: linear-gradient(-90deg, #086fbb 1%, #232323 99%) !important; */
+  /* background: linear-gradient(-90deg, #2180ce 1%, #2180ce 99%) !important; */
+  /* background-image: url("https://www.bypeople.com/wp-content/uploads/2015/05/css-dark-chain-background.png"); */
 }
 </style>

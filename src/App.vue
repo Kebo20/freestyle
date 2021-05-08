@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div > 
     <!--Menu responsive -->
     <div>
       <a-drawer
@@ -16,11 +16,11 @@
     <a-layout id="components-layout-demo-responsive">
       <a-layout>
         <!-- <a-layout-header :style="{ background: 'linear-gradient(-90deg, #086FBB 8%, #00c9db 92%)', padding: 0 }"> -->
-        <div :style="this.$store.state.responsive?'text-align:left;':'text-align:right;'">
+        <div :style="this.$store.state.responsive?'text-align:left;':'text-align:right;'" >
           <a-menu
             v-model="current"
             mode="horizontal"
-            class="navBar"
+            class="navBar header"
             :style="{
               background: 'linear-gradient(-90deg, #086FBB 8%, #232323 92%) ',
               padding: 0,
@@ -226,5 +226,13 @@ a {
   }
 }
 // }
+
+
+.header {
+   background: linear-gradient(-90deg, #086fbb 1%, #232323 99%) !important; 
+  /* background: linear-gradient(-90deg, #2180ce 1%, #2180ce 99%) !important; */
+  // background-image: url('https://www.bypeople.com/wp-content/uploads/2015/05/css-dark-chain-background.png')  !important;
+
+}
 </style>
 
