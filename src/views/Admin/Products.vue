@@ -564,9 +564,9 @@ export default {
       if (!isJpgOrPng) {
         this.$message.error("You can only upload JPG file!");
       }
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isLt2M = file.size / 1024 / 1024 < 7;
       if (!isLt2M) {
-        this.$message.error("Image must smaller than 2MB!");
+        this.$message.error("Tamaño máximo 7MB!");
       }
       return isJpgOrPng && isLt2M;
     },
