@@ -109,7 +109,8 @@
         </a-form-item>
 
         <a-form-item label="Descripción">
-          <a-input
+          <a-textarea
+          :auto-size="{ minRows: 3, maxRows: 5 }"
             v-decorator="[
               'description',
               {
@@ -124,7 +125,7 @@
             ]"
             placeholder="Descripción"
           >
-          </a-input>
+          </a-textarea>
         </a-form-item>
 
         <a-form-item label="Precio">
