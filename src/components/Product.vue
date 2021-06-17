@@ -56,14 +56,14 @@
 
     <a-modal v-model="visible" :title="p.name" @ok="handleOk">
       <a-row>
-        <a-col :xs="24" :lg="24" style="text-align: center;margin-bottom:20px">
+        <!-- <a-col :xs="24" :lg="24" style="text-align: center;margin-bottom:20px">
           <img :src="this.$store.state.api_url+p.image" width="290px" />
-        </a-col>
+        </a-col> -->
 
-         <a-col :xs="24" :lg="24" style="margin-bottom:10px;font-size:20px;color:black">
+         <!-- <a-col :xs="24" :lg="24" style="margin-bottom:10px;font-size:20px;color:black">
               <p><b>{{ p.name }}</b></p>
 
-        </a-col>
+        </a-col> -->
         <a-col :xs="24" :lg="24">
           <a-row>
             <a-col v-show="p.price_old != 0" :xs="8" style="text-align:right">
@@ -83,7 +83,7 @@
               <a-tag
                 style="font-size: 18px; padding: 5px; margin-bottom: 25px;"
                 color="blue"
-                ><b>Ahora: S/. {{ p.price }} </b></a-tag
+                ><b><span v-show="p.price_old != 0">Ahora:</span> <span v-show="p.price_old == 0">Precio:</span> S/. {{ p.price }} </b></a-tag
               >
               
             </a-col>
@@ -98,14 +98,14 @@
       </a-row>
       <template slot="footer">
         <a-button key="back" @click="handleCancel"> Cerrar </a-button>
-        <a-button
+        <!-- <a-button
           class="btn-primary"
           key="submit"
           type="primary"
           @click="handleOk"
         >
           <a-icon type="shopping-cart" /> Añadir al carrito
-        </a-button>
+        </a-button> -->
       </template>
     </a-modal>
   </div>
@@ -129,8 +129,8 @@ export default {
       this.$emit("detailProduct", product);
     },
     detail(a) {
-      // this.visible = true;
-      // this.p = a;
+      this.visible = true;
+      this.p = a;
     },
     handleOk() {},
     handleCancel() {
