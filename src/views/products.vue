@@ -1,11 +1,14 @@
 <template>
   <div style="justify-content: center">
-    <a-row>
-      <a-col :xs="6" style="margin-right: 13px" v-show="this.$store.state.responsive ? false : true">
-       
-        <a-list bordered :data-source="arrayCategories" class="div-freestyle">
+    <a-row style="margin-top:16px">
+      <a-col
+        :xs="6"
+        style="margin-right: 13px"
+        v-show="this.$store.state.responsive ? false : true"
+      >
+        <a-list bordered :data-source="arrayCategories" class="div-freestyle" style="margin-top:75px">
           <a-list-item
-          class="item-category"
+            class="item-category"
             slot="renderItem"
             style="cursor: pointer"
             @click="link(item.idCategory)"
@@ -29,25 +32,51 @@
           </div>
           <!-- <div slot="footer"></div> -->
         </a-list>
-         <div class="div-freestyle item-category" @click="link('all')" style="padding:10px;padding-left:36px;cursor:pointer">
+        <div
+          class="div-freestyle item-category"
+          @click="link('all')"
+          style="padding: 10px; padding-left: 36px; cursor: pointer"
+        >
           <span>Todas las categorias</span>
         </div>
       </a-col>
 
-      <a-col :xs="this.$store.state.responsive ?24:17" >
-        <div style="overflow-x:scroll;">
+      <a-col :xs="this.$store.state.responsive ? 24 : 17">
+        <!-- <div style="overflow-x:scroll;">
         <a-tag color="#033254" style="font-size: 21px; padding: 4px;"
           ><b> {{ category.name }} </b>
         </a-tag>
-        </div>
+        </div> -->
         <a-row>
+         
+          <a-col
+            :xs="24"
+            :sm="24"
+            :md="24"
+            :lg="16"
+            :xl="16"
+            
+          >
+            <!-- <input
+              placeholder="Buscar aquí"
+              style="width: 100%"
+              class="ant-input"
+              v-model="search"
+              @keyup="byCategory"
+            /> -->
+            <div
+              style="font-size: 21px; width: 100%; color: #033254"
+            >
+              <b> {{ category.name }} </b>
+            </div>
+          </a-col>
           <a-col
             :xs="13"
             :sm="13"
             :md="13"
-            :lg="4"
-            :xl="4"
-            style="margin-top: 30px"
+            :lg="6"
+            :xl="6"
+            
           >
             <a-select
               placeholder="Ordenar por "
@@ -67,7 +96,7 @@
             :lg="2"
             :xl="2"
             v-show="order == 'ASC'"
-            style="margin-top: 30px"
+            
           >
             <a-button shape="circle" icon="up" @click="changeOrder" />
           </a-col>
@@ -78,28 +107,9 @@
             :lg="2"
             :xl="2"
             v-show="order == 'DESC'"
-            style="margin-top: 30px"
+            
           >
             <a-button shape="circle" icon="down" @click="changeOrder" />
-          </a-col>
-          <a-col :xs="13" :sm="13" :md="13" :lg="2" :xl="2">
-            <span></span>
-          </a-col>
-          <a-col
-            :xs="24"
-            :sm="24"
-            :md="24"
-            :lg="16"
-            :xl="16"
-            style="margin-top: 30px"
-          >
-            <input
-              placeholder="Buscar aquí"
-              style="width: 100%"
-              class="ant-input"
-              v-model="search"
-              @keyup="byCategory"
-            />
           </a-col>
         </a-row>
 
@@ -122,11 +132,14 @@
         </a-row>
       </a-col>
 
-        <a-col :xs="22" style="margin-right: 13px" v-show="this.$store.state.responsive ? true : false">
-       
+      <a-col
+        :xs="22"
+        style="margin-right: 13px"
+        v-show="this.$store.state.responsive ? true : false"
+      >
         <a-list bordered :data-source="arrayCategories" class="div-freestyle">
           <a-list-item
-          class="item-category"
+            class="item-category"
             slot="renderItem"
             style="cursor: pointer"
             @click="link(item.idCategory)"
@@ -150,11 +163,14 @@
           </div>
           <!-- <div slot="footer"></div> -->
         </a-list>
-         <div class="div-freestyle item-category" @click="link('all')" style="padding:10px;padding-left:36px;cursor:pointer">
+        <div
+          class="div-freestyle item-category"
+          @click="link('all')"
+          style="padding: 10px; padding-left: 36px; cursor: pointer"
+        >
           <span>Todas las categorias</span>
         </div>
       </a-col>
-
     </a-row>
   </div>
 </template>
@@ -292,10 +308,8 @@ export default {
   color: white !important;
 }
 
-.item-category:hover{
+.item-category:hover {
   background-color: #c5ccd1 !important;
   color: #033254 !important;
-
-
 }
 </style>
