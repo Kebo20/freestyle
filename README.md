@@ -1,4 +1,4 @@
-# freestyle
+<h1>FRONTED DE TIENDA VIRTUAL - FREESTYLE</h1>
 
 ## Project setup
 ```
